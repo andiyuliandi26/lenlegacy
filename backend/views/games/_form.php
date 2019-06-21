@@ -42,24 +42,24 @@ use kartik\widgets\TimePicker;
             var ismvplose = $('#gamedetails-ismvplose').is(':checked') ? 1 : 0;
 
             $('#tableTeam'+ $('#gamedetails-team').val()).append('<tr>'+
-                '<td><input type="hidden" value="'+ team + '" name="team" class="team">'+ team + '</td>'+
-                '<td><input type="hidden" value="'+ playerid + '" name="playerid" class="playerid">'+ playername + '</td>'+
-                '<td><input type="hidden" value="'+ heroid + '" name="heroid" class="heroid">'+ heroname + '</td>'+
-                '<td><input type="hidden" value="'+ kill + '" name="kill" class="kill">'+ kill + '</td>'+
-                '<td><input type="hidden" value="'+ death + '" name="death" class="death">'+ death + '</td>'+
-                '<td><input type="hidden" value="'+ assist + '" name="assist" class="assist">'+ assist + '</td>'+
-                '<td><input type="hidden" value="'+ rating + '" name="rating" class="rating">'+ rating + '</td>'+
-                '<td><input type="hidden" value="'+ herodamage + '" name="herodamage" class="herodamage">'+ herodamage + '</td>'+
-                '<td><input type="hidden" value="'+ herodamagepersentage + '" name="herodamagepersentage" class="herodamagepersentage">'+ herodamagepersentage + '</td>'+
-                '<td><input type="hidden" value="'+ turretdamage + '" name="turretdamage" class="turretdamage">'+ turretdamage + '</td>'+
-                '<td><input type="hidden" value="'+ turretdamagepersentage + '" name="turretdamagepersentage" class="turretdamagepersentage">'+ turretdamagepersentage + '</td>'+
-                '<td><input type="hidden" value="'+ damagetaken + '" name="damagetaken" class="damagetaken">'+ damagetaken + '</td>'+
-                '<td><input type="hidden" value="'+ damagetakenpersentage + '" name="damagetakenpersentage" class="damagetakenpersentage">'+ damagetakenpersentage + '</td>'+
-                '<td><input type="hidden" value="'+ gold + '" name="gold" class="gold">'+ gold + '</td>'+
-                '<td><input type="hidden" value="'+ medal + '" name="medal" class="medal">'+ medal + '</td>'+
-                '<td><input type="hidden" value="'+ isvictory + '" name="isvictory" class="isvictory">'+ isvictory + '</td>'+
-                '<td><input type="hidden" value="'+ ismvpwinning + '" name="ismvpwinning" class="ismvpwinning">'+ ismvpwinning + '</td>'+
-                '<td><input type="hidden" value="'+ ismvplose + '" name="ismvplose" class="ismvpwinning">'+ ismvplose + '</td>'+
+                '<td><input class="form-control" type="hidden" value="'+ team + '" name="team" class="team">'+ team + '</td>'+
+                '<td><input class="form-control" type="hidden" value="'+ playerid + '" name="playerid" class="playerid">'+ playername + '</td>'+
+                '<td><input class="form-control" type="hidden" value="'+ heroid + '" name="heroid" class="heroid">'+ heroname + '</td>'+
+                '<td><input class="form-control" type="text" value="'+ kill + '" name="kill" class="kill">'+ kill + '</td>'+
+                '<td><input class="form-control" type="text" value="'+ death + '" name="death" class="death">'+ death + '</td>'+
+                '<td><input class="form-control" type="text" value="'+ assist + '" name="assist" class="assist">'+ assist + '</td>'+
+                '<td><input class="form-control" type="text" value="'+ rating + '" name="rating" class="rating">'+ rating + '</td>'+
+                '<td><input class="form-control" type="text" value="'+ herodamage + '" name="herodamage" class="herodamage">'+ herodamage + '</td>'+
+                '<td><input class="form-control" type="text" value="'+ herodamagepersentage + '" name="herodamagepersentage" class="herodamagepersentage">'+ herodamagepersentage + '</td>'+
+                '<td><input class="form-control" type="text" value="'+ turretdamage + '" name="turretdamage" class="turretdamage">'+ turretdamage + '</td>'+
+                '<td><input class="form-control" type="text" value="'+ turretdamagepersentage + '" name="turretdamagepersentage" class="turretdamagepersentage">'+ turretdamagepersentage + '</td>'+
+                '<td><input class="form-control" type="text" value="'+ damagetaken + '" name="damagetaken" class="damagetaken">'+ damagetaken + '</td>'+
+                '<td><input class="form-control" type="text" value="'+ damagetakenpersentage + '" name="damagetakenpersentage" class="damagetakenpersentage">'+ damagetakenpersentage + '</td>'+
+                '<td><input class="form-control" type="text" value="'+ gold + '" name="gold" class="gold">'+ gold + '</td>'+
+                '<td><input class="form-control" type="text" value="'+ medal + '" name="medal" class="medal">'+ medal + '</td>'+
+                '<td><input class="form-control" type="text" value="'+ isvictory + '" name="isvictory" class="isvictory">'+ isvictory + '</td>'+
+                '<td><input class="form-control" type="text" value="'+ ismvpwinning + '" name="ismvpwinning" class="ismvpwinning">'+ ismvpwinning + '</td>'+
+                '<td><input class="form-control" type="text" value="'+ ismvplose + '" name="ismvplose" class="ismvpwinning">'+ ismvplose + '</td>'+
                 '</tr>');
             });
 
@@ -105,16 +105,16 @@ use kartik\widgets\TimePicker;
             };
 
             console.log(games);
-            // $.ajax({
-            //     url : '<?php //echo Yii::$app->request->baseUrl.'/games/savegames' ?>',
-            //     type : 'post',
-            //     data : {
-            //         games: games,
-            //         gamesdetails: gamedetails,
-            //     },
-            //     success: function (data){
-            //     }
-    	    // });
+            $.ajax({
+                url : '<?php echo Yii::$app->request->baseUrl.'/games/savegames' ?>',
+                type : 'post',
+                data : {
+                    games: games
+                },
+                success: function (result){
+                    console.log(result.data);
+                }
+    	    });
         });
     });
 </script>
@@ -266,24 +266,28 @@ use kartik\widgets\TimePicker;
                  <table class="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th>Team</th>
-                            <th>Player</th>
-                            <th>Hero</th>
-                            <th>Kills</th>
-                            <th>Deaths</th>
-                            <th>Assists</th>                              
-                            <th>Rating</th> 
-                            <th>Hero DMG</th>
-                            <th>% Hero DMG</th>
-                            <th>Turret DMG</th>
-                            <th>% Turret DMG</th>
-                            <th>Damage Taken</th>
-                            <th>% Damage Taken</th>                            
-                            <th>Golds</th>
-                            <th>Medal</th>
-                            <th>Victory</th>
-                            <th>MVP Winning</th>
-                            <th>MVP Lose</th>
+                            <th style="width:2%;text-align:center;vertical-align:middle;" rowspan="2">Team</th>
+                            <th style="width:10%;text-align:center;vertical-align:middle;" rowspan="2">Player</th>
+                            <th style="width:10%;text-align:center;vertical-align:middle;" rowspan="2">Hero</th>
+                            <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Kills</th>
+                            <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Deaths</th>
+                            <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Assists</th>                              
+                            <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Rating</th> 
+                            <th style="width:4%;text-align:center;vertical-align:middle;" colspan="6">Total Damage</th>                            
+                            <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Golds</th>
+                            <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Medal</th>
+                            <th style="width:2%;text-align:center;vertical-align:middle;" rowspan="2">Victory</th>
+                            <th style="width:2%;text-align:center;vertical-align:middle;" colspan="2">MVP</th>
+                        </tr>
+                        <tr>
+                            <th style="width:4%;text-align:center;vertical-align:middle;">Hero</th>
+                            <th style="width:4%;text-align:center;vertical-align:middle;">% Hero</th>
+                            <th style="width:4%;text-align:center;vertical-align:middle;">Turret</th>
+                            <th style="width:4%;text-align:center;vertical-align:middle;">% Turret</th>
+                            <th style="width:4%;text-align:center;vertical-align:middle;">Taken</th>
+                            <th style="width:4%;text-align:center;vertical-align:middle;">% Taken</th>
+                            <th style="width:2%;text-align:center;vertical-align:middle;">Winning</th>
+                            <th style="width:2%;text-align:center;vertical-align:middle;">Lose</th>
                         </tr>
                     </thead>
                     <tbody id="tableTeamA">
@@ -302,24 +306,28 @@ use kartik\widgets\TimePicker;
                 <table class="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th>Team</th>
-                            <th>Player</th>
-                            <th>Hero</th>
-                            <th>Kills</th>
-                            <th>Deaths</th>
-                            <th>Assists</th>                              
-                            <th>Rating</th> 
-                            <th>Hero DMG</th>
-                            <th>% Hero DMG</th>
-                            <th>Turret DMG</th>
-                            <th>% Turret DMG</th>
-                            <th>Damage Taken</th>
-                            <th>% Damage Taken</th>                            
-                            <th>Golds</th>
-                            <th>Medal</th>
-                            <th>Victory</th>
-                            <th>MVP Winning</th>
-                            <th>MVP Lose</th>
+                            <th style="width:2%;text-align:center;vertical-align:middle;" rowspan="2">Team</th>
+                            <th style="width:10%;text-align:center;vertical-align:middle;" rowspan="2">Player</th>
+                            <th style="width:10%;text-align:center;vertical-align:middle;" rowspan="2">Hero</th>
+                            <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Kills</th>
+                            <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Deaths</th>
+                            <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Assists</th>                              
+                            <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Rating</th> 
+                            <th style="width:4%;text-align:center;vertical-align:middle;" colspan="6">Total Damage</th>                            
+                            <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Golds</th>
+                            <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Medal</th>
+                            <th style="width:2%;text-align:center;vertical-align:middle;" rowspan="2">Victory</th>
+                            <th style="width:2%;text-align:center;vertical-align:middle;" colspan="2">MVP</th>
+                        </tr>
+                        <tr>
+                            <th style="width:4%;text-align:center;vertical-align:middle;">Hero</th>
+                            <th style="width:4%;text-align:center;vertical-align:middle;">% Hero</th>
+                            <th style="width:4%;text-align:center;vertical-align:middle;">Turret</th>
+                            <th style="width:4%;text-align:center;vertical-align:middle;">% Turret</th>
+                            <th style="width:4%;text-align:center;vertical-align:middle;">Taken</th>
+                            <th style="width:4%;text-align:center;vertical-align:middle;">% Taken</th>
+                            <th style="width:2%;text-align:center;vertical-align:middle;">Winning</th>
+                            <th style="width:2%;text-align:center;vertical-align:middle;">Lose</th>
                         </tr>
                     </thead>
                     <tbody id="tableTeamB">

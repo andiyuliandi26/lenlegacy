@@ -67,7 +67,7 @@ class Games extends \yii\db\ActiveRecord
      */
     public function getId0()
     {
-        return $this->hasOne(Season::className(), ['id' => 'id']);
+        return $this->hasOne(Season::className(), ['seasonid' => 'id']);
     }
 
     /**

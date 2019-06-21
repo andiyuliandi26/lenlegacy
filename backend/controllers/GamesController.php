@@ -130,25 +130,62 @@ class GamesController extends Controller
 
     public function actionSavegames(){
 		$games = new Games();		
-				
+        $code = 0;
 		if(Yii::$app->request->isAjax){
 			$data = Yii::$app->request->post();
-			$games = explode(":", $data['games']);
-			$gamesdetails = explode(":", $data['gamesdetails']);
+            $getGames = $data["games"];
+            $games->seasonid = $getGames["seasonid"];
+            $games->gamename = $getGames["gamename"];
+            $games->gamedate = $getGames["gamedate"];
+            $games->gameduration = $getGames["gameduration"];
+            $gamedetailscount = count($getGames["gamedetails"]);
+			//$gamesdetails = explode(":", $data['gamesdetails']);
 			
-			//if($games->save()){
+			if($games->save()){
+                $result = $games->id;
+                if($gamedetailscount > 0){
+                    for($i = 0; $i < $gamedetailscount; $i++){
+                        $getDetails = $getGames["gamedetails"][$i];
+                        $gamedetails = new GameDetails();
+                        $gamedetails->gameid = $games->id;
+                        $gamedetails->team = $getDetails["team"];
+                        $gamedetails->playerid = $getDetails["playerid"];
+                        $gamedetails->heroid = $getDetails["heroid"];
+                        $gamedetails->herodamage = $getDetails["herodamage"];
+                        $gamedetails->herodamagepersentage = $getDetails["herodamagepersentage"];
+                        $gamedetails->turretdamage = $getDetails["turretdamage"];
+                        $gamedetails->turretdamagepersentage = $getDetails["turretdamagepersentage"];
+                        $gamedetails->damagetaken = $getDetails["damagetaken"];
+                        $gamedetails->damagetakenpersentage = $getDetails["damagetakenpersentage"];
+                        $gamedetails->kill = $getDetails["kill"];
+                        $gamedetails->death = $getDetails["death"];
+                        $gamedetails->assist = $getDetails["assist"];
+                        $gamedetails->gold = $getDetails["gold"];
+                        $gamedetails->rating = $getDetails["rating"];
+                        $gamedetails->medal = $getDetails["medal"];
+                        $gamedetails->isvictory = $getDetails["isvictory"];
+                        $gamedetails->ismvpwinning = $getDetails["ismvpwinning"];
+                        $gamedetails->ismvplose = $getDetails["ismvplose"];
+                        if($gamedetails->save()){
+                            $code = 300;
+                        }
+                    }
+                }
+            }else{
+                $result = "false";
+            }
 			    
 			    
-				$result = "true";
+				
 			//}else{
 				//$result = "false";
 			//}
 			
 			Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 			return [
-				'result' => $result,
-				'code' => 100,
-				'data' => $accesslogs,
+				'status' => $result,
+				'code' => $gamedetailscount,
+				'data' => $getGames["gamedetails"],
 			];
 		}	
 	}
