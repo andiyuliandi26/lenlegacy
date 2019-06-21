@@ -11,6 +11,8 @@ use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
 use kartik\widgets\DatePicker;
 use kartik\widgets\TimePicker;
+use yii\jui\AutoComplete;
+use yii\web\JsExpression;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Games */
@@ -21,9 +23,9 @@ use kartik\widgets\TimePicker;
         $('#btnAddplayer').click(function(){
             var team = $('#gamedetails-team').val();
             var playerid = $('#gamedetails-playerid').val();
-            var playername = $('#gamedetails-playerid option:selected').text();
+            var playername = $('#gamedetails-player').val();
             var heroid = $('#gamedetails-heroid').val();
-            var heroname = $('#gamedetails-heroid option:selected').text();
+            var heroname = $('#gamedetails-hero').val();
             var kill = $('#gamedetails-kill').val();
             var death = $('#gamedetails-death').val();
             var assist = $('#gamedetails-assist').val();
@@ -41,27 +43,37 @@ use kartik\widgets\TimePicker;
             var ismvpwinning = $('#gamedetails-ismvpwinning').is(':checked') ? 1 : 0;
             var ismvplose = $('#gamedetails-ismvplose').is(':checked') ? 1 : 0;
 
-            $('#tableTeam'+ $('#gamedetails-team').val()).append('<tr>'+
-                '<td><input class="form-control" type="hidden" value="'+ team + '" name="team" class="team">'+ team + '</td>'+
-                '<td><input class="form-control" type="hidden" value="'+ playerid + '" name="playerid" class="playerid">'+ playername + '</td>'+
-                '<td><input class="form-control" type="hidden" value="'+ heroid + '" name="heroid" class="heroid">'+ heroname + '</td>'+
-                '<td><input class="form-control" type="text" value="'+ kill + '" name="kill" class="kill">'+ kill + '</td>'+
-                '<td><input class="form-control" type="text" value="'+ death + '" name="death" class="death">'+ death + '</td>'+
-                '<td><input class="form-control" type="text" value="'+ assist + '" name="assist" class="assist">'+ assist + '</td>'+
-                '<td><input class="form-control" type="text" value="'+ rating + '" name="rating" class="rating">'+ rating + '</td>'+
-                '<td><input class="form-control" type="text" value="'+ herodamage + '" name="herodamage" class="herodamage">'+ herodamage + '</td>'+
-                '<td><input class="form-control" type="text" value="'+ herodamagepersentage + '" name="herodamagepersentage" class="herodamagepersentage">'+ herodamagepersentage + '</td>'+
-                '<td><input class="form-control" type="text" value="'+ turretdamage + '" name="turretdamage" class="turretdamage">'+ turretdamage + '</td>'+
-                '<td><input class="form-control" type="text" value="'+ turretdamagepersentage + '" name="turretdamagepersentage" class="turretdamagepersentage">'+ turretdamagepersentage + '</td>'+
-                '<td><input class="form-control" type="text" value="'+ damagetaken + '" name="damagetaken" class="damagetaken">'+ damagetaken + '</td>'+
-                '<td><input class="form-control" type="text" value="'+ damagetakenpersentage + '" name="damagetakenpersentage" class="damagetakenpersentage">'+ damagetakenpersentage + '</td>'+
-                '<td><input class="form-control" type="text" value="'+ gold + '" name="gold" class="gold">'+ gold + '</td>'+
-                '<td><input class="form-control" type="text" value="'+ medal + '" name="medal" class="medal">'+ medal + '</td>'+
-                '<td><input class="form-control" type="text" value="'+ isvictory + '" name="isvictory" class="isvictory">'+ isvictory + '</td>'+
-                '<td><input class="form-control" type="text" value="'+ ismvpwinning + '" name="ismvpwinning" class="ismvpwinning">'+ ismvpwinning + '</td>'+
-                '<td><input class="form-control" type="text" value="'+ ismvplose + '" name="ismvplose" class="ismvpwinning">'+ ismvplose + '</td>'+
-                '</tr>');
-            });
+            $('#tableTeam'+ team).append('<tr>'+
+                '<td><input class="form-control" type="hidden" value="'+ team + '" name="team">'+
+					'<input class="form-control" type="hidden" value="'+ playerid + '" name="playerid">'+ playername + '</td>'+
+                '<td><input class="form-control" type="hidden" value="'+ heroid + '" name="heroid"">'+ heroname + '</td>'+
+                '<td><input class="form-control" type="text" value="" name="kill"></td>'+
+                '<td><input class="form-control" type="text" value="" name="death"></td>'+
+                '<td><input class="form-control" type="text" value="" name="assist"></td>'+
+                '<td><input class="form-control" type="text" value="" name="rating"></td>'+
+                '<td><input class="form-control" type="text" value="" name="herodamage"></td>'+
+                '<td><input class="form-control" type="text" value="" name="herodamagepersentage"></td>'+
+                '<td><input class="form-control" type="text" value="" name="turretdamage"></td>'+
+                '<td><input class="form-control" type="text" value="" name="turretdamagepersentage"></td>'+
+                '<td><input class="form-control" type="text" value="" name="damagetaken"></td>'+
+                '<td><input class="form-control" type="text" value="" name="damagetakenpersentage"></td>'+
+                '<td><input class="form-control" type="text" value="" name="gold"></td>'+
+                '<td>'+
+				'<select class="form-control medal" name="medal">'+
+					'<option value=""></option>'+
+					'<option value="AFK">AFK</option>'+
+					'<option value="Bronze">Bronze</option>'+
+					'<option value="Silver">Silver</option>'+
+					'<option value="Gold">Gold</option>'+
+					'</select>'+
+				'</td>'+
+                '<td><input class="form-control isvictory" type="checkbox" value="1" name="isvictory"></td>'+
+                '<td><input class="form-control ismvpwinning" type="checkbox" value="1" name="ismvpwinning"></td>'+
+                '<td><input class="form-control ismvplose" type="checkbox" value="1" name="ismvplose"></td>'+
+            '</tr>');
+
+			clearform();
+        });
 
         $('#btnSave').click(function(){
             var seasonid = $('#games-seasonid').val();
@@ -69,9 +81,12 @@ use kartik\widgets\TimePicker;
             var gameduration = $('#games-gameduration').val();
             var gamedate = $('#gamedate').val() + ' ' + $('#gametime').val();
             var gamedetails = [];
-            var countPlayer = $('.team').length;
+            var countPlayer = $('input[name=team]').length;
+			var medal = $('.medal').length;
+				console.log(medal);
             if(countPlayer > 0){
                 for(var i = 0; i < countPlayer; i++){
+				
                     playerdetail = {
                         team: $('input[name=team]:eq('+ i +')').val(),
                         playerid: $('input[name=playerid]:eq('+ i +')').val(),
@@ -87,10 +102,10 @@ use kartik\widgets\TimePicker;
                         damagetaken: $('input[name=damagetaken]:eq('+ i +')').val(),
                         damagetakenpersentage: $('input[name=damagetakenpersentage]:eq('+ i +')').val(),
                         gold: $('input[name=gold]:eq('+ i +')').val(),
-                        medal: $('input[name=medal]:eq('+ i +')').val(),
-                        isvictory: $('input[name=isvictory]:eq('+ i +')').val(),
-                        ismvpwinning: $('input[name=ismvpwinning]:eq('+ i +')').val(),
-                        ismvplose: $('input[name=ismvplose]:eq('+ i +')').val(),
+                        medal: $('.medal:eq('+ i +')').val(),
+                        isvictory: $('.isvictory:eq('+ i +')').is(':checked') ? 1 : 0,
+                        ismvpwinning: $('.ismvpwinning:eq('+ i +')').is(':checked') ? 1 : 0,
+                        ismvplose: $('.ismvplose:eq('+ i +')').is(':checked') ? 1 : 0,
                     };
 
                     gamedetails.push(playerdetail);
@@ -117,6 +132,14 @@ use kartik\widgets\TimePicker;
     	    });
         });
     });
+
+	function clearform(){
+		$('#gamedetails-team').val('');
+        $('#gamedetails-playerid').val('');
+        $('#gamedetails-player').val('');
+        $('#gamedetails-heroid').val('');
+        $('#gamedetails-hero').val('');
+	}
 </script>
 <div class="games-form">
     <?php $form = ActiveForm::begin(); ?>
@@ -135,11 +158,10 @@ use kartik\widgets\TimePicker;
                 <?= $form->field($model, 'gamename')->textInput(['maxlength' => true]) ?>
                 
             </div>
-            <div class="col-md-3 form-group">
+            <div class="col-md-5 form-group">
                 <div class="col-md-12">
                 <label>Game Date</label></div>
-                <div class="col-md-6">
-                
+                <div class="col-md-8">                
                     <?= DatePicker::widget([
                         'name' => 'gamedate',
                         'id' => 'gamedate',
@@ -154,7 +176,7 @@ use kartik\widgets\TimePicker;
                         ]
                     ]); ?>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <?= TimePicker::widget([
                         'id' => 'gametime',
                         'name' => 'gametime', 
@@ -165,10 +187,8 @@ use kartik\widgets\TimePicker;
                         ]
                     ]); ?>
                 </div>
-                
-                
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <?= $form->field($model, 'gameduration')->textInput() ?>
             </div>
         </div>
@@ -180,76 +200,62 @@ use kartik\widgets\TimePicker;
             <div class="col-md-12">
                 <div class="form-group">
                     <?php
-                        $player=Player::find()->all();
-                        $listDataPlayer=ArrayHelper::map($player,'id','name'); 
-                        $hero=Hero::find()->all();
-                        $listDataHero=ArrayHelper::map($hero,'id','heroname');
+                        //$player=Player::find()->all();
+                        //$listDataPlayer=ArrayHelper::map($player,'id','name'); 
+                        //$hero=Hero::find()->all();
+                        //$listDataHero=ArrayHelper::map($hero,'id','heroname');
+						$player = Player::find()
+							->select(['CONCAT(name," (",nickname,")") as value', 'CONCAT(name," (",nickname,")") as label','id as id'])
+							->asArray()
+							->all();
+						$hero = Hero::find()
+						->select(['heroname as value', 'heroname as label','id as id'])
+						->asArray()
+						->all();
                     ?>                    
-                    <div class="col-md-1">
+                    <div class="col-md-2">
                         <?= $form->field($models, 'team')->dropDownList(['A'=> 'A' ,'B' => 'B'],['prompt'=>'Silahkan pilih...']); ?>
                     </div>
-                    <div class="col-md-2">
-                        <?= $form->field($models, 'playerid')->dropDownList($listDataPlayer,['prompt'=>'Silahkan pilih...']); ?>
+                    <div class="col-md-4">
+						<?= $form->field($models, 'player')->widget(\yii\jui\AutoComplete::classname(), [
+							'clientOptions' => [
+								'source' => $player,
+								'minLength'=>'0', 
+								'select' => new JsExpression("function( event, ui ) {
+									$('#gamedetails-playerid').val(ui.item.id);
+								 }")
+							],
+							'options'=>[
+								'class'=>'form-control',
+							]
+						]) ?>
+                        <input type="hidden" id="gamedetails-playerid"/>
                     </div>
-                    <div class="col-md-2">
-                        <?= $form->field($models, 'heroid')->dropDownList($listDataHero,['prompt'=>'Silahkan pilih...']); ?>
+                    <div class="col-md-3">
+						<?= $form->field($models, 'hero')->widget(\yii\jui\AutoComplete::classname(), [
+							'clientOptions' => [
+								'source' => $hero,
+								'minLength'=>'0', 
+								'select' => new JsExpression("function( event, ui ) {
+									$('#gamedetails-heroid').val(ui.item.id);
+								 }")
+							],
+							'options'=>[
+								'class'=>'form-control',
+							]
+						]) ?>
+                        <input type="hidden" id="gamedetails-heroid"/>
                     </div>
-                    <div class="col-md-1">
-                        <?= $form->field($models, 'kill')->textInput(); ?>
-                    </div>
-                    <div class="col-md-1">
-                        <?= $form->field($models, 'death')->textInput(); ?>
-                    </div>
-                    <div class="col-md-1">
-                        <?= $form->field($models, 'assist')->textInput(); ?>
-                    </div>
-                    <div class="col-md-1">
-                        <?= $form->field($models, 'rating')->textInput(); ?>
-                    </div>
+					<div class="col-md-1">
+					<label>&nbsp;</label>
+						<div class="form-group">
+							<?= Html::Button('Add', ['class' => 'btn btn-success', 'id'=>'btnAddplayer']) ?>
+						</div>
+					</div>
                 </div>
-            </div>
-            <div class="col-md-12">
-                <div class="form-group">
-                    <div class="col-md-1">
-                        <?= $form->field($models, 'herodamage')->textInput(); ?>
-                    </div>
-                    <div class="col-md-1">
-                        <?= $form->field($models, 'herodamagepersentage')->textInput(); ?>
-                    </div>
-                    <div class="col-md-1">
-                        <?= $form->field($models, 'turretdamage')->textInput(); ?>
-                    </div>
-                    <div class="col-md-1">
-                        <?= $form->field($models, 'turretdamagepersentage')->textInput(); ?>
-                    </div>
-                    <div class="col-md-1">
-                        <?= $form->field($models, 'damagetaken')->textInput(); ?>
-                    </div>
-                    <div class="col-md-1">
-                        <?= $form->field($models, 'damagetakenpersentage')->textInput(); ?>
-                    </div>
-                    <div class="col-md-1">
-                        <?= $form->field($models, 'gold')->textInput(); ?>
-                    </div>
-                    <div class="col-md-1">
-                        <?= $form->field($models, 'medal')->dropDownList(['AFK'=>'AFK','Bronze'=>'Bronze','Silver'=>'Silver','Gold'=>'Gold'],['prompt'=>'Silahkan pilih...']); ?>
-                    </div>
-                    <div class="col-md-1">
-                        <?= $form->field($models, 'isvictory')->checkbox(); ?>
-                    </div>
-                    <div class="col-md-1">
-                        <?= $form->field($models, 'ismvpwinning')->checkbox(); ?>
-                    </div>
-                    <div class="col-md-1">
-                        <?= $form->field($models, 'ismvplose')->checkbox(); ?>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-12">
-                <div class="form-group">
-                    <?= Html::Button('Add', ['class' => 'btn btn-success', 'id'=>'btnAddplayer']) ?>
-                </div>
-            </div>
+				
+            </div>    
+            
         </div>
     </div>
     <div class="panel panel-default">
@@ -266,16 +272,15 @@ use kartik\widgets\TimePicker;
                  <table class="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th style="width:2%;text-align:center;vertical-align:middle;" rowspan="2">Team</th>
                             <th style="width:10%;text-align:center;vertical-align:middle;" rowspan="2">Player</th>
-                            <th style="width:10%;text-align:center;vertical-align:middle;" rowspan="2">Hero</th>
+                            <th style="width:7%;text-align:center;vertical-align:middle;" rowspan="2">Hero</th>
                             <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Kills</th>
                             <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Deaths</th>
                             <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Assists</th>                              
                             <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Rating</th> 
                             <th style="width:4%;text-align:center;vertical-align:middle;" colspan="6">Total Damage</th>                            
                             <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Golds</th>
-                            <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Medal</th>
+                            <th style="width:7%;text-align:center;vertical-align:middle;" rowspan="2">Medal</th>
                             <th style="width:2%;text-align:center;vertical-align:middle;" rowspan="2">Victory</th>
                             <th style="width:2%;text-align:center;vertical-align:middle;" colspan="2">MVP</th>
                         </tr>
@@ -306,16 +311,15 @@ use kartik\widgets\TimePicker;
                 <table class="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th style="width:2%;text-align:center;vertical-align:middle;" rowspan="2">Team</th>
                             <th style="width:10%;text-align:center;vertical-align:middle;" rowspan="2">Player</th>
-                            <th style="width:10%;text-align:center;vertical-align:middle;" rowspan="2">Hero</th>
+                            <th style="width:7%;text-align:center;vertical-align:middle;" rowspan="2">Hero</th>
                             <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Kills</th>
                             <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Deaths</th>
                             <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Assists</th>                              
                             <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Rating</th> 
                             <th style="width:4%;text-align:center;vertical-align:middle;" colspan="6">Total Damage</th>                            
                             <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Golds</th>
-                            <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Medal</th>
+                            <th style="width:7%;text-align:center;vertical-align:middle;" rowspan="2">Medal</th>
                             <th style="width:2%;text-align:center;vertical-align:middle;" rowspan="2">Victory</th>
                             <th style="width:2%;text-align:center;vertical-align:middle;" colspan="2">MVP</th>
                         </tr>
@@ -337,7 +341,7 @@ use kartik\widgets\TimePicker;
             </div>
     </div>
 
-    <div class="col-md-12">
+    <div class="col-md-12" style="margin-top:10px;">
         <div class="form-group">
             <?= Html::Button('Save', ['class' => 'btn btn-success', 'id'=>'btnSave']) ?>
         </div>

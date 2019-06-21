@@ -67,7 +67,7 @@ class GamesController extends Controller
     {
         $model = new Games();
         $models = new GameDetails();
-
+		
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }

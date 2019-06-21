@@ -37,6 +37,7 @@ class Player extends \yii\db\ActiveRecord
         return [
             [['name', 'nickname', 'gameid'], 'required'],
             [['tierid'], 'integer'],
+			[['playerfullname'], 'safe'],
             [['name', 'nickname'], 'string', 'max' => 150],
             [['status'], 'string', 'max' => 45],
             [['image'], 'string', 'max' => 200],
@@ -61,6 +62,7 @@ class Player extends \yii\db\ActiveRecord
             'gameid' => 'Game ID',
             'nohp' => 'Nohp',
             'tiername' => 'Tier',
+			'playerfullname' => 'Fullname',
         ];
     }
 
@@ -84,6 +86,10 @@ class Player extends \yii\db\ActiveRecord
     {
         return $this->tier->tiername;
     }
+
+	public function getPlayerFullname(){
+		return $this->name." (".$this->nickname.")";
+	}
 
     /**
      * {@inheritdoc}
