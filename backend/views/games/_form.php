@@ -44,9 +44,11 @@ use yii\web\JsExpression;
             var ismvplose = $('#gamedetails-ismvplose').is(':checked') ? 1 : 0;
 
             $('#tableTeam'+ team).append('<tr>'+
-                '<td><input class="form-control" type="hidden" value="'+ team + '" name="team">'+
+                '<td>'+
+					'<input class="form-control" type="hidden" value="0" name="gamedetailsid">' +
+					'<input class="form-control" type="hidden" value="'+ team + '" name="team">'+
 					'<input class="form-control" type="hidden" value="'+ playerid + '" name="playerid">'+ playername + '</td>'+
-                '<td><input class="form-control" type="hidden" value="'+ heroid + '" name="heroid"">'+ heroname + '</td>'+
+                '<td><input class="form-control" type="hidden" value="'+ heroid + '" name="heroid">'+ heroname + '</td>'+
                 '<td><input class="form-control" type="text" value="" name="kill"></td>'+
                 '<td><input class="form-control" type="text" value="" name="death"></td>'+
                 '<td><input class="form-control" type="text" value="" name="assist"></td>'+
@@ -76,6 +78,7 @@ use yii\web\JsExpression;
         });
 
         $('#btnSave').click(function(){
+			var id = $('#games-id').val();
             var seasonid = $('#games-seasonid').val();
             var gamename = $('#games-gamename').val();
             var gameduration = $('#games-gameduration').val();
@@ -85,9 +88,9 @@ use yii\web\JsExpression;
 			var medal = $('.medal').length;
 				console.log(medal);
             if(countPlayer > 0){
-                for(var i = 0; i < countPlayer; i++){
-				
+                for(var i = 0; i < countPlayer; i++){				
                     playerdetail = {
+						gamedetailsid: $('input[name=gamedetailsid]:eq('+ i +')').val(),
                         team: $('input[name=team]:eq('+ i +')').val(),
                         playerid: $('input[name=playerid]:eq('+ i +')').val(),
                         heroid: $('input[name=heroid]:eq('+ i +')').val(),
@@ -112,10 +115,11 @@ use yii\web\JsExpression;
                 }
             }
             var games = {
+				id: id,
                 seasonid: seasonid,
-                gamename: gamename,
+                //gamename: gamename,
                 gamedate: gamedate,
-                gameduration: gameduration,
+                //gameduration: gameduration,
                 gamedetails: gamedetails,
             };
 
@@ -128,6 +132,8 @@ use yii\web\JsExpression;
                 },
                 success: function (result){
                     console.log(result.data);
+					alert("Penyimpanan data berhasil.");
+					window.location.replace('<?php echo Yii::$app->request->baseUrl.'/games/' ?>');
                 }
     	    });
         });
@@ -147,117 +153,109 @@ use yii\web\JsExpression;
     <div class="panel panel-primary">
         <div class="panel-heading">Games</div>
         <div class="panel-body">
-            <div class="col-md-2">
+			<div class="col-md-12">
+				<div class="col-md-2">
+					<?php
+						$season=Season::find()->all();
+						$listData=ArrayHelper::map($season,'id','seasonname');
+					?>
+					<input type="hidden" name="games-id" id="games-id" value="<?= $model->id; ?>">
+					<?= $form->field($model, 'seasonid')->dropDownList($listData,['prompt'=>'Silahkan pilih...']); ?>
+				</div>
+				<div class="col-md-10">
+					<div class="col-md-12">
+					<label>Game Date</label></div>
+					<?php
+						$explode = explode(' ', $model->gamedate);
+					?>
+					<div class="col-md-3">                
+						<?= DatePicker::widget([
+							'name' => 'gamedate',
+							'id' => 'gamedate',
+							'type' => DatePicker::TYPE_COMPONENT_PREPEND,
+							//'value' => date("Y-m-d"),
+							'value' => $model->gamedate != "" ? $explode[0] : date("Y-m-d"),
+							'pluginOptions' => [
+								'autoclose'=>true,
+								'format' => 'yyyy-mm-dd',
+								'language' =>'id',
+								'minViewMode'=>0,
+								'endDate'=>'+0y',
+							]
+						]); ?>
+					</div>
+					<div class="col-md-2">
+						<?= TimePicker::widget([
+							'id' => 'gametime',
+							'name' => 'gametime',
+							'value' => $model->gamedate != "" ? $explode[1] : date("H:m:s"),
+							'pluginOptions' => [
+								'minuteStep' => 1,
+								'showSeconds' => true,
+								'showMeridian' => false
+							]
+						]); ?>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
                 <?php
-                    $season=Season::find()->all();
-                    $listData=ArrayHelper::map($season,'id','seasonname');
-                ?>
-                <?= $form->field($model, 'seasonid')->dropDownList($listData,['prompt'=>'Silahkan pilih...']); ?>
-            </div>
-            <div class="col-md-2">
-                <?= $form->field($model, 'gamename')->textInput(['maxlength' => true]) ?>
-                
-            </div>
-            <div class="col-md-5 form-group">
-                <div class="col-md-12">
-                <label>Game Date</label></div>
-                <div class="col-md-8">                
-                    <?= DatePicker::widget([
-                        'name' => 'gamedate',
-                        'id' => 'gamedate',
-                        'type' => DatePicker::TYPE_COMPONENT_PREPEND,
-                        'value' => date("Y-m-d"),
-                        'pluginOptions' => [
-                            'autoclose'=>true,
-                            'format' => 'yyyy-mm-dd',
-                            'language' =>'id',
-                            'minViewMode'=>0,
-                            'endDate'=>'+0y',
-                        ]
-                    ]); ?>
+                    //$player=Player::find()->all();
+                    //$listDataPlayer=ArrayHelper::map($player,'id','name'); 
+                    //$hero=Hero::find()->all();
+                    //$listDataHero=ArrayHelper::map($hero,'id','heroname');
+					$player = Player::find()
+						->select(['CONCAT(name," (",nickname,")") as value', 'CONCAT(name," (",nickname,")") as label','id as id'])
+						->asArray()
+						->all();
+					$hero = Hero::find()
+					->select(['heroname as value', 'heroname as label','id as id'])
+					->asArray()
+					->all();
+                ?>                    
+                <div class="col-md-2">
+                    <?= $form->field($models, 'team')->dropDownList(['A'=> 'A' ,'B' => 'B'],['prompt'=>'Silahkan pilih...']); ?>
                 </div>
                 <div class="col-md-4">
-                    <?= TimePicker::widget([
-                        'id' => 'gametime',
-                        'name' => 'gametime', 
-                        'pluginOptions' => [
-                            'minuteStep' => 1,
-                            'showSeconds' => true,
-                            'showMeridian' => false
-                        ]
-                    ]); ?>
+					<?= $form->field($models, 'player')->widget(\yii\jui\AutoComplete::classname(), [
+						'clientOptions' => [
+							'source' => $player,
+							'minLength'=>'0', 
+							'select' => new JsExpression("function( event, ui ) {
+								$('#gamedetails-playerid').val(ui.item.id);
+								}")
+						],
+						'options'=>[
+							'class'=>'form-control',
+						]
+					]) ?>
+                    <input type="hidden" id="gamedetails-playerid"/>
                 </div>
-            </div>
-            <div class="col-md-1">
-                <?= $form->field($model, 'gameduration')->textInput() ?>
-            </div>
+                <div class="col-md-3">
+					<?= $form->field($models, 'hero')->widget(\yii\jui\AutoComplete::classname(), [
+						'clientOptions' => [
+							'source' => $hero,
+							'minLength'=>'0', 
+							'select' => new JsExpression("function( event, ui ) {
+								$('#gamedetails-heroid').val(ui.item.id);
+								}")
+						],
+						'options'=>[
+							'class'=>'form-control',
+						]
+					]) ?>
+                    <input type="hidden" id="gamedetails-heroid"/>
+                </div>
+				<div class="col-md-1">
+				<label>&nbsp;</label>
+					<div class="form-group">
+						<?= Html::Button('Add', ['class' => 'btn btn-success', 'id'=>'btnAddplayer']) ?>
+					</div>
+				</div>
+            </div>  
         </div>
     </div>
 
-    <div class="panel panel-danger">
-        <div class="panel-heading">Add player</div>
-        <div class="panel-body">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <?php
-                        //$player=Player::find()->all();
-                        //$listDataPlayer=ArrayHelper::map($player,'id','name'); 
-                        //$hero=Hero::find()->all();
-                        //$listDataHero=ArrayHelper::map($hero,'id','heroname');
-						$player = Player::find()
-							->select(['CONCAT(name," (",nickname,")") as value', 'CONCAT(name," (",nickname,")") as label','id as id'])
-							->asArray()
-							->all();
-						$hero = Hero::find()
-						->select(['heroname as value', 'heroname as label','id as id'])
-						->asArray()
-						->all();
-                    ?>                    
-                    <div class="col-md-2">
-                        <?= $form->field($models, 'team')->dropDownList(['A'=> 'A' ,'B' => 'B'],['prompt'=>'Silahkan pilih...']); ?>
-                    </div>
-                    <div class="col-md-4">
-						<?= $form->field($models, 'player')->widget(\yii\jui\AutoComplete::classname(), [
-							'clientOptions' => [
-								'source' => $player,
-								'minLength'=>'0', 
-								'select' => new JsExpression("function( event, ui ) {
-									$('#gamedetails-playerid').val(ui.item.id);
-								 }")
-							],
-							'options'=>[
-								'class'=>'form-control',
-							]
-						]) ?>
-                        <input type="hidden" id="gamedetails-playerid"/>
-                    </div>
-                    <div class="col-md-3">
-						<?= $form->field($models, 'hero')->widget(\yii\jui\AutoComplete::classname(), [
-							'clientOptions' => [
-								'source' => $hero,
-								'minLength'=>'0', 
-								'select' => new JsExpression("function( event, ui ) {
-									$('#gamedetails-heroid').val(ui.item.id);
-								 }")
-							],
-							'options'=>[
-								'class'=>'form-control',
-							]
-						]) ?>
-                        <input type="hidden" id="gamedetails-heroid"/>
-                    </div>
-					<div class="col-md-1">
-					<label>&nbsp;</label>
-						<div class="form-group">
-							<?= Html::Button('Add', ['class' => 'btn btn-success', 'id'=>'btnAddplayer']) ?>
-						</div>
-					</div>
-                </div>
-				
-            </div>    
-            
-        </div>
-    </div>
     <div class="panel panel-default">
         <div class="panel-heading">Player Detail</div>
         <div class="panel-body">
@@ -296,7 +294,54 @@ use yii\web\JsExpression;
                         </tr>
                     </thead>
                     <tbody id="tableTeamA">
-                        
+                        <?php
+							//print_r($model->gamedetails);
+							if(count($model->gamedetails) > 0){
+								for($i = 0; $i < count($model->gamedetails); $i++){
+									$getPlayer = $model->gamedetails[$i];
+									//print_r($getPlayer->player);
+									$afk = $getPlayer->medal == "AFK" ? "selected" : "";
+									$bronze = $getPlayer->medal == "Bronze" ? "selected" : "";
+									$silver = $getPlayer->medal == "Silver" ? "selected" : "";
+									$gold = $getPlayer->medal == "Gold" ? "selected" : "";
+									$isvictory = $getPlayer->isvictory ? "checked" : "";
+									$ismvpwinning = $getPlayer->ismvpwinning ? "checked" : "";
+									$ismvplose = $getPlayer->ismvplose ? "checked" : "";
+									if($getPlayer->team == "A"){
+									echo '<tr>
+										<td>
+											<input class="form-control" type="hidden" value="'.$getPlayer->id.'" name="gamedetailsid">
+											<input class="form-control" type="hidden" value="'.$getPlayer->team.'" name="team">
+											<input class="form-control" type="hidden" value="'.$getPlayer->playerid.'" name="playerid"> '.$getPlayer->player->playerfullname.'  </td>
+										<td><input class="form-control" type="hidden" value="'.$getPlayer->heroid.'" name="heroid">'.$getPlayer->hero->heroname.'</td>
+										<td><input class="form-control" type="text" value="'.$getPlayer->kill.'" name="kill"></td>
+										<td><input class="form-control" type="text" value="'.$getPlayer->death.'" name="death"></td>
+										<td><input class="form-control" type="text" value="'.$getPlayer->assist.'" name="assist"></td>
+										<td><input class="form-control" type="text" value="'.$getPlayer->rating.'" name="rating"></td>
+										<td><input class="form-control" type="text" value="'.$getPlayer->herodamage.'" name="herodamage"></td>
+										<td><input class="form-control" type="text" value="'.$getPlayer->herodamagepersentage.'" name="herodamagepersentage"></td>
+										<td><input class="form-control" type="text" value="'.$getPlayer->turretdamage.'" name="turretdamage"></td>
+										<td><input class="form-control" type="text" value="'.$getPlayer->turretdamagepersentage.'" name="turretdamagepersentage"></td>
+										<td><input class="form-control" type="text" value="'.$getPlayer->damagetaken.'" name="damagetaken"></td>
+										<td><input class="form-control" type="text" value="'.$getPlayer->damagetakenpersentage.'" name="damagetakenpersentage"></td>
+										<td><input class="form-control" type="text" value="'.$getPlayer->gold.'" name="gold"></td>
+										<td>
+										<select class="form-control medal" name="medal">
+											<option value=""></option>
+											<option value="AFK" '.$afk.'>AFK</option>
+											<option value="Bronze" '.$bronze.'>Bronze</option>
+											<option value="Silver" '.$silver.'>Silver</option>
+											<option value="Gold" '.$gold.'>Gold</option>
+											</select>
+										</td>
+										<td><input class="form-control isvictory" type="checkbox" value="1" name="isvictory"  '.$isvictory.'></td>
+										<td><input class="form-control ismvpwinning" type="checkbox" value="1" name="ismvpwinning"  '.$ismvpwinning.'></td>
+										<td><input class="form-control ismvplose" type="checkbox" value="1" name="ismvplose"  '.$ismvplose.'></td>
+									</tr>';
+								}
+								}
+							}
+						?>
                     </tbody>
                 </table>          
         </div>
@@ -335,7 +380,54 @@ use yii\web\JsExpression;
                         </tr>
                     </thead>
                     <tbody id="tableTeamB">
-                        
+                        <?php
+							//print_r($model->gamedetails);
+							if(count($model->gamedetails) > 0){
+								for($i = 0; $i < count($model->gamedetails); $i++){
+									$getPlayer = $model->gamedetails[$i];
+									//print_r($getPlayer->player);
+									$afk = $getPlayer->medal == "AFK" ? "selected" : "";
+									$bronze = $getPlayer->medal == "Bronze" ? "selected" : "";
+									$silver = $getPlayer->medal == "Silver" ? "selected" : "";
+									$gold = $getPlayer->medal == "Gold" ? "selected" : "";
+									$isvictory = $getPlayer->isvictory ? "checked" : "";
+									$ismvpwinning = $getPlayer->ismvpwinning ? "checked" : "";
+									$ismvplose = $getPlayer->ismvplose ? "checked" : "";
+									if($getPlayer->team == "B"){
+									echo '<tr>
+										<td>
+											<input class="form-control" type="hidden" value="'.$getPlayer->id.'" name="gamedetailsid">
+											<input class="form-control" type="hidden" value="'.$getPlayer->team.'" name="team">
+											<input class="form-control" type="hidden" value="'.$getPlayer->playerid.'" name="playerid"> '.$getPlayer->player->playerfullname.'  </td>
+										<td><input class="form-control" type="hidden" value="'.$getPlayer->heroid.'" name="heroid">'.$getPlayer->hero->heroname.'</td>
+										<td><input class="form-control" type="text" value="'.$getPlayer->kill.'" name="kill"></td>
+										<td><input class="form-control" type="text" value="'.$getPlayer->death.'" name="death"></td>
+										<td><input class="form-control" type="text" value="'.$getPlayer->assist.'" name="assist"></td>
+										<td><input class="form-control" type="text" value="'.$getPlayer->rating.'" name="rating"></td>
+										<td><input class="form-control" type="text" value="'.$getPlayer->herodamage.'" name="herodamage"></td>
+										<td><input class="form-control" type="text" value="'.$getPlayer->herodamagepersentage.'" name="herodamagepersentage"></td>
+										<td><input class="form-control" type="text" value="'.$getPlayer->turretdamage.'" name="turretdamage"></td>
+										<td><input class="form-control" type="text" value="'.$getPlayer->turretdamagepersentage.'" name="turretdamagepersentage"></td>
+										<td><input class="form-control" type="text" value="'.$getPlayer->damagetaken.'" name="damagetaken"></td>
+										<td><input class="form-control" type="text" value="'.$getPlayer->damagetakenpersentage.'" name="damagetakenpersentage"></td>
+										<td><input class="form-control" type="text" value="'.$getPlayer->gold.'" name="gold"></td>
+										<td>
+										<select class="form-control medal" name="medal">
+											<option value=""></option>
+											<option value="AFK" '.$afk.'>AFK</option>
+											<option value="Bronze" '.$bronze.'>Bronze</option>
+											<option value="Silver" '.$silver.'>Silver</option>
+											<option value="Gold" '.$gold.'>Gold</option>
+											</select>
+										</td>
+										<td><input class="form-control isvictory" type="checkbox" value="1" name="isvictory"  '.$isvictory.'></td>
+										<td><input class="form-control ismvpwinning" type="checkbox" value="1" name="ismvpwinning"  '.$ismvpwinning.'></td>
+										<td><input class="form-control ismvplose" type="checkbox" value="1" name="ismvplose"  '.$ismvplose.'></td>
+									</tr>';
+								}
+								}
+							}
+						?>
                     </tbody>
                 </table>
             </div>

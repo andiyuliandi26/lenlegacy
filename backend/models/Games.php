@@ -36,7 +36,7 @@ class Games extends \yii\db\ActiveRecord
             [['gamedate'], 'safe'],
             [['seasonid', 'gameduration'], 'integer'],
             [['gamename'], 'string', 'max' => 100],
-            [['id'], 'exist', 'skipOnError' => true, 'targetClass' => Season::className(), 'targetAttribute' => ['id' => 'id']],
+            //[['id'], 'exist', 'skipOnError' => true, 'targetClass' => Season::className(), 'targetAttribute' => ['id' => 'id']],
         ];
     }
 

@@ -25,15 +25,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
+            ['class' => 'yii\grid\SerialColumn'],			
+            ['class' => 'yii\grid\ActionColumn'],
             'gamename',
             'gamedate',
             'seasonid',
-            'gameduration',
 
-            ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
 
