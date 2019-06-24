@@ -6,7 +6,10 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
-
+use yii\base\Model;
+use yii\data\ActiveDataProvider;
+use backend\models\Player;
+use \yii\db\Query;
 /**
  * Site controller
  */
@@ -60,7 +63,41 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+		//$query = Player::find()
+			//->select('name, count(gamedetails.id) as play')
+			//->joinWith(['gamedetails'])
+			//->leftjoin('gamedetails','player.id = gamedetails.playerid')
+			//->groupby(['player.id'])
+			//->asArray()
+			//->all();
+
+			$query = new Query();
+			$query->select([
+				'CONCAT(t1.name," (",t1.nickname,")") as name',
+				'count(t2.id) as play',
+				'sum(t2.isvictory) as win', 
+				'(count(t1.id) - sum(t2.isvictory)) as lose', 
+				'sum(t2.kill) as kill', 
+				'sum(t2.death) as death', 
+				'sum(t2.assist) as assist', 
+				'sum(t2.rating) as totalscore', 
+				'avg(t2.rating) as avgscore',
+				'sum(t2.ismvpwinning) as mvpwinning',
+				'sum(t2.ismvplose) as mvplose'
+			])
+			//->joinWith(['gamedetails'])
+			->from('player t1')
+			->join('LEFT OUTER JOIN','gamedetails t2','t1.id = t2.playerid')
+			->groupBy(['t1.id'])
+			->orderBy('totalscore DESC');
+			//->asArray()
+			//->all();
+			$command = $query->createCommand();
+			$data = $command->queryAll(); 
+
+        return $this->render('index',[
+			'model' => $data
+		]);
     }
 
     /**

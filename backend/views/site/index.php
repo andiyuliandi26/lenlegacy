@@ -7,47 +7,52 @@ $this->title = 'Len Legacy';
 <div class="site-index">
 
     <div class="jumbotron">
-        <h1>Congratulations!</h1>
+        <h3>Klasemen Len Legacy Tournamen</h3>
 
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
+        <small class="text-small">You have successfully created your Yii-powered application.</small>
     </div>
-
-    <div class="body-content">
-
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
-        </div>
-
-    </div>
+    <div class="col-lg-12">
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th style="width:10%;text-align:center;vertical-align:middle;">Player</th>
+					<th style="width:4%;text-align:center;vertical-align:middle;">Play</th>
+					<th style="width:4%;text-align:center;vertical-align:middle;">Win</th>
+					<th style="width:4%;text-align:center;vertical-align:middle;">Lose</th>
+					<th style="width:4%;text-align:center;vertical-align:middle;">Kill</th>
+					<th style="width:4%;text-align:center;vertical-align:middle;">Death</th>
+					<th style="width:4%;text-align:center;vertical-align:middle;">Assist</th>                              
+					<th style="width:4%;text-align:center;vertical-align:middle;">Total Score</th>
+					<th style="width:4%;text-align:center;vertical-align:middle;">Average Score</th>
+					<th style="width:2%;text-align:center;vertical-align:middle;">MVP Winning</th>
+					<th style="width:2%;text-align:center;vertical-align:middle;">MVP Lose</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php
+					foreach($model as $value){
+						//var_dump($value);
+					//var_dump($value->name);
+						echo '<tr>
+							<td>'.$value['name'].'</td>
+							<td>'.$value['play'].'</td>
+							<td>'.$value['win'].'</td>
+							<td>'.$value['lose'].'</td>
+							<td>'.$value['kill'].'</td>
+							<td>'.$value['death'].'</td>
+							<td>'.$value['assist'].'</td>
+							<td>'.$value['totalscore'].'</td>
+							<td>'.$value['avgscore'].'</td>
+							<td>'.$value['mvpwinning'].'</td>
+							<td>'.$value['mvplose'].'</td>
+						</tr>';
+					}
+					
+				?>
+			</tbody>
+	</table>
+    </div>  
 </div>
+<?php 
+	//var_dump($model);
+?>

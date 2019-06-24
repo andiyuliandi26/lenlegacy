@@ -88,6 +88,7 @@ class GamesController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+		$models = new GameDetails();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -95,6 +96,7 @@ class GamesController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'models'=> $models
         ]);
     }
 
@@ -129,15 +131,23 @@ class GamesController extends Controller
     }
 
     public function actionSavegames(){
-		$games = new Games();		
+				
         $code = 0;
 		if(Yii::$app->request->isAjax){
 			$data = Yii::$app->request->post();
             $getGames = $data["games"];
+
+			if($getGames["id"] != "" || $getGames["id"] != 0){
+				//$games->id = $getGames["id"];
+				$games = Games::findOne($getGames["id"]);
+			}else{
+				$games = new Games();
+			}
+
             $games->seasonid = $getGames["seasonid"];
-            $games->gamename = $getGames["gamename"];
+            $games->gamename = preg_replace("/[^0-9]/", "", $getGames["gamedate"]);
             $games->gamedate = $getGames["gamedate"];
-            $games->gameduration = $getGames["gameduration"];
+            //$games->gameduration = $getGames["gameduration"];
             $gamedetailscount = count($getGames["gamedetails"]);
 			//$gamesdetails = explode(":", $data['gamesdetails']);
 			
@@ -146,7 +156,15 @@ class GamesController extends Controller
                 if($gamedetailscount > 0){
                     for($i = 0; $i < $gamedetailscount; $i++){
                         $getDetails = $getGames["gamedetails"][$i];
-                        $gamedetails = new GameDetails();
+                        
+
+						if($getDetails["gamedetailsid"] != "" || $getDetails["gamedetailsid"] != 0){
+							//$gamedetails->id = $getDetails["gamedetailsid"];
+							$gamedetails = GameDetails::findOne($getDetails["gamedetailsid"]);
+						}else{
+							$gamedetails = new GameDetails();
+						}
+
                         $gamedetails->gameid = $games->id;
                         $gamedetails->team = $getDetails["team"];
                         $gamedetails->playerid = $getDetails["playerid"];
@@ -172,7 +190,7 @@ class GamesController extends Controller
                     }
                 }
             }else{
-                $result = "false";
+                $result = $games->getErrors();
             }
 			    
 			    
