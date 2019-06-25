@@ -5,16 +5,14 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Games */
 
-$this->title = 'Update Games: ' . $model->id;
+$this->title = 'Create Games';
 $this->params['breadcrumbs'][] = ['label' => 'Games', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->gamename, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="games-update">
-
+<div class="games-create">
     <?= $this->render('_form', [
         'model' => $model,
-		'models' => $models
+        'models' => $models
     ]) ?>
 
 </div>

@@ -62,7 +62,7 @@ class Season extends \yii\db\ActiveRecord
      */
     public function getGames()
     {
-        return $this->hasOne(Games::className(), ['id' => 'id']);
+        return $this->hasMany(Games::className(), ['seasonid' => 'id']);
     }
 
     /**

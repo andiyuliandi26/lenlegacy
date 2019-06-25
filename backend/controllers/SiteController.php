@@ -71,25 +71,32 @@ class SiteController extends Controller
 			//->asArray()
 			//->all();
 
-			$query = new Query();
+            $query = new Query();
+            $subQuery = (new \yii\db\Query())
+                ->select('t2.*')
+                ->from('gamedetails t2')
+                ->join('INNER JOIN', 'games g', 'g.id = t2.gameid and g.status ="Done"');
 			$query->select([
-				'CONCAT(t1.name," (",t1.nickname,")") as name',
+                't1.id as playerid',
+                'CONCAT( t1.name," (",t1.nickname,")") as name',
 				'count(t2.id) as play',
 				'sum(t2.isvictory) as win', 
 				'(count(t1.id) - sum(t2.isvictory)) as lose', 
 				'sum(t2.kill) as kill', 
 				'sum(t2.death) as death', 
 				'sum(t2.assist) as assist', 
-				'sum(t2.rating) as totalscore', 
-				'avg(t2.rating) as avgscore',
+				'(sum(t2.rating) + sum((t2.ismvpwinning * 1.5)) + sum(t2.ismvplose)) as totalscore', 
+				'avg((t2.rating + (t2.ismvpwinning * 1.5) + t2.ismvplose)) as avgscore',
 				'sum(t2.ismvpwinning) as mvpwinning',
 				'sum(t2.ismvplose) as mvplose'
 			])
 			//->joinWith(['gamedetails'])
 			->from('player t1')
-			->join('LEFT OUTER JOIN','gamedetails t2','t1.id = t2.playerid')
+            ->join('LEFT OUTER JOIN',['t2' => $subQuery],'t1.id = t2.playerid')
+            //->join('right JOIN','games t3','t2.gameid = t3.id')
+            //->where('t3.Status = "Done"')
 			->groupBy(['t1.id'])
-			->orderBy('totalscore DESC');
+			->orderBy('totalscore DESC, name');
 			//->asArray()
 			//->all();
 			$command = $query->createCommand();

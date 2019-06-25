@@ -89,7 +89,6 @@ $heroauto = Hero::find()->select(['heroname as value', 'heroname as label','id a
             var seasonid = $('#games-seasonid').val();
             var gamename = $('#games-gamename').val();
             var gameduration = $('#games-gameduration').val();
-            var statusgame = $('#games-status').val();
             var gamedate = $('#gamedate').val() + ' ' + $('#gametime').val();
             var gamedetails = [];
             var countPlayer = $('input[name=team]').length;
@@ -105,7 +104,14 @@ $heroauto = Hero::find()->select(['heroname as value', 'heroname as label','id a
                         kill: $('input[name=kill]:eq('+ i +')').val(),
                         death: $('input[name=death]:eq('+ i +')').val(),
                         assist: $('input[name=assist]:eq('+ i +')').val(),
-                        rating: $('input[name=rating]:eq('+ i +')').val(),                        
+                        rating: $('input[name=rating]:eq('+ i +')').val(),
+                        herodamage: $('input[name=herodamage]:eq('+ i +')').val(),
+                        herodamagepersentage: $('input[name=herodamagepersentage]:eq('+ i +')').val(),
+                        turretdamage: $('input[name=turretdamage]:eq('+ i +')').val(),
+                        turretdamagepersentage: $('input[name=turretdamagepersentage]:eq('+ i +')').val(),
+                        damagetaken: $('input[name=damagetaken]:eq('+ i +')').val(),
+                        damagetakenpersentage: $('input[name=damagetakenpersentage]:eq('+ i +')').val(),
+                        gold: $('input[name=gold]:eq('+ i +')').val(),
                         medal: $('.medal:eq('+ i +')').val(),
                         isvictory: $('.isvictory:eq('+ i +')').is(':checked') ? 1 : 0,
                         ismvpwinning: $('.ismvpwinning:eq('+ i +')').is(':checked') ? 1 : 0,
@@ -118,13 +124,13 @@ $heroauto = Hero::find()->select(['heroname as value', 'heroname as label','id a
             var games = {
 				id: id,
                 seasonid: seasonid,
-                status: statusgame,
+                //gamename: gamename,
                 gamedate: gamedate,
                 //gameduration: gameduration,
                 gamedetails: gamedetails,
             };
 
-            //console.log(games);
+            console.log(games);
             $.ajax({
                 url : '<?php echo Yii::$app->request->baseUrl.'/games/savegames' ?>',
                 type : 'post',
@@ -254,12 +260,20 @@ $heroauto = Hero::find()->select(['heroname as value', 'heroname as label','id a
                             <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Kills</th>
                             <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Deaths</th>
                             <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Assists</th>                              
-                            <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Rating</th>
+                            <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Rating</th> 
+                            <th style="width:4%;text-align:center;vertical-align:middle;" colspan="6">Total Damage</th>                            
+                            <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Golds</th>
                             <th style="width:7%;text-align:center;vertical-align:middle;" rowspan="2">Medal</th>
                             <th style="width:2%;text-align:center;vertical-align:middle;" rowspan="2">Victory</th>
                             <th style="width:2%;text-align:center;vertical-align:middle;" colspan="2">MVP</th>
                         </tr>
                         <tr>
+                            <th style="width:4%;text-align:center;vertical-align:middle;">Hero</th>
+                            <th style="width:4%;text-align:center;vertical-align:middle;">% Hero</th>
+                            <th style="width:4%;text-align:center;vertical-align:middle;">Turret</th>
+                            <th style="width:4%;text-align:center;vertical-align:middle;">% Turret</th>
+                            <th style="width:4%;text-align:center;vertical-align:middle;">Taken</th>
+                            <th style="width:4%;text-align:center;vertical-align:middle;">% Taken</th>
                             <th style="width:2%;text-align:center;vertical-align:middle;">Winning</th>
                             <th style="width:2%;text-align:center;vertical-align:middle;">Lose</th>
                         </tr>
@@ -294,6 +308,13 @@ $heroauto = Hero::find()->select(['heroname as value', 'heroname as label','id a
                                             <td><input class="form-control" type="text" value="'.$getPlayer->death.'" name="death"></td>
                                             <td><input class="form-control" type="text" value="'.$getPlayer->assist.'" name="assist"></td>
                                             <td><input class="form-control" type="text" value="'.$getPlayer->rating.'" name="rating"></td>
+                                            <td><input class="form-control" type="text" value="'.$getPlayer->herodamage.'" name="herodamage"></td>
+                                            <td><input class="form-control" type="text" value="'.$getPlayer->herodamagepersentage.'" name="herodamagepersentage"></td>
+                                            <td><input class="form-control" type="text" value="'.$getPlayer->turretdamage.'" name="turretdamage"></td>
+                                            <td><input class="form-control" type="text" value="'.$getPlayer->turretdamagepersentage.'" name="turretdamagepersentage"></td>
+                                            <td><input class="form-control" type="text" value="'.$getPlayer->damagetaken.'" name="damagetaken"></td>
+                                            <td><input class="form-control" type="text" value="'.$getPlayer->damagetakenpersentage.'" name="damagetakenpersentage"></td>
+                                            <td><input class="form-control" type="text" value="'.$getPlayer->gold.'" name="gold"></td>
                                             <td>
                                             <select class="form-control medal" name="medal">
                                                 <option value=""></option>
@@ -326,6 +347,13 @@ $heroauto = Hero::find()->select(['heroname as value', 'heroname as label','id a
                                             <td><input class="form-control" type="text" value="0" name="death"></td>
                                             <td><input class="form-control" type="text" value="0" name="assist"></td>
                                             <td><input class="form-control" type="text" value="0" name="rating"></td>
+                                            <td><input class="form-control" type="text" value="0" name="herodamage"></td>
+                                            <td><input class="form-control" type="text" value="0" name="herodamagepersentage"></td>
+                                            <td><input class="form-control" type="text" value="0" name="turretdamage"></td>
+                                            <td><input class="form-control" type="text" value="0" name="turretdamagepersentage"></td>
+                                            <td><input class="form-control" type="text" value="0" name="damagetaken"></td>
+                                            <td><input class="form-control" type="text" value="0" name="damagetakenpersentage"></td>
+                                            <td><input class="form-control" type="text" value="0" name="gold"></td>
                                             <td>
                                             <select class="form-control medal" name="medal">
                                                 <option value=""></option>
@@ -344,7 +372,7 @@ $heroauto = Hero::find()->select(['heroname as value', 'heroname as label','id a
 						?>
                     </tbody>
                 </table>          
-            </div>
+        </div>
         <div class="col-md-12">
                 <h4>Team B</h4>
                 <?php 
@@ -362,11 +390,19 @@ $heroauto = Hero::find()->select(['heroname as value', 'heroname as label','id a
                             <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Deaths</th>
                             <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Assists</th>                              
                             <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Rating</th> 
+                            <th style="width:4%;text-align:center;vertical-align:middle;" colspan="6">Total Damage</th>                            
+                            <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Golds</th>
                             <th style="width:7%;text-align:center;vertical-align:middle;" rowspan="2">Medal</th>
                             <th style="width:2%;text-align:center;vertical-align:middle;" rowspan="2">Victory</th>
                             <th style="width:2%;text-align:center;vertical-align:middle;" colspan="2">MVP</th>
                         </tr>
                         <tr>
+                            <th style="width:4%;text-align:center;vertical-align:middle;">Hero</th>
+                            <th style="width:4%;text-align:center;vertical-align:middle;">% Hero</th>
+                            <th style="width:4%;text-align:center;vertical-align:middle;">Turret</th>
+                            <th style="width:4%;text-align:center;vertical-align:middle;">% Turret</th>
+                            <th style="width:4%;text-align:center;vertical-align:middle;">Taken</th>
+                            <th style="width:4%;text-align:center;vertical-align:middle;">% Taken</th>
                             <th style="width:2%;text-align:center;vertical-align:middle;">Winning</th>
                             <th style="width:2%;text-align:center;vertical-align:middle;">Lose</th>
                         </tr>
@@ -402,6 +438,13 @@ $heroauto = Hero::find()->select(['heroname as value', 'heroname as label','id a
 										<td><input class="form-control" type="text" value="'.$getPlayer->death.'" name="death"></td>
 										<td><input class="form-control" type="text" value="'.$getPlayer->assist.'" name="assist"></td>
 										<td><input class="form-control" type="text" value="'.$getPlayer->rating.'" name="rating"></td>
+										<td><input class="form-control" type="text" value="'.$getPlayer->herodamage.'" name="herodamage"></td>
+										<td><input class="form-control" type="text" value="'.$getPlayer->herodamagepersentage.'" name="herodamagepersentage"></td>
+										<td><input class="form-control" type="text" value="'.$getPlayer->turretdamage.'" name="turretdamage"></td>
+										<td><input class="form-control" type="text" value="'.$getPlayer->turretdamagepersentage.'" name="turretdamagepersentage"></td>
+										<td><input class="form-control" type="text" value="'.$getPlayer->damagetaken.'" name="damagetaken"></td>
+										<td><input class="form-control" type="text" value="'.$getPlayer->damagetakenpersentage.'" name="damagetakenpersentage"></td>
+										<td><input class="form-control" type="text" value="'.$getPlayer->gold.'" name="gold"></td>
 										<td>
 										<select class="form-control medal" name="medal">
 											<option value=""></option>
@@ -434,6 +477,13 @@ $heroauto = Hero::find()->select(['heroname as value', 'heroname as label','id a
                                             <td><input class="form-control" type="text" value="0" name="death"></td>
                                             <td><input class="form-control" type="text" value="0" name="assist"></td>
                                             <td><input class="form-control" type="text" value="0" name="rating"></td>
+                                            <td><input class="form-control" type="text" value="0" name="herodamage"></td>
+                                            <td><input class="form-control" type="text" value="0" name="herodamagepersentage"></td>
+                                            <td><input class="form-control" type="text" value="0" name="turretdamage"></td>
+                                            <td><input class="form-control" type="text" value="0" name="turretdamagepersentage"></td>
+                                            <td><input class="form-control" type="text" value="0" name="damagetaken"></td>
+                                            <td><input class="form-control" type="text" value="0" name="damagetakenpersentage"></td>
+                                            <td><input class="form-control" type="text" value="0" name="gold"></td>
                                             <td>
                                             <select class="form-control medal" name="medal">
                                                 <option value=""></option>

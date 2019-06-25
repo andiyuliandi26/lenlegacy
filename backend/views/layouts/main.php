@@ -32,19 +32,22 @@ AppAsset::register($this);
         'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
+            'class' => 'navbar-inverse',
         ],
     ]);
     $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
+        ['label' => 'Standings', 'url' => ['/site/index']],
+        ['label' => 'Schedules', 'url' => ['/schedule/index']],
+        ['label' => 'Results', 'url' => ['/games/index']],
         ['label' => 'Hero', 'url' => ['/hero/index']],
         ['label' => 'Player', 'url' => ['/player/index']],
         ['label' => 'Season', 'url' => ['/season/index']],
-        ['label' => 'Games', 'url' => ['/games/index']]
+        //['label' => 'Games', 'url' => ['/games/index']]
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
+        
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(

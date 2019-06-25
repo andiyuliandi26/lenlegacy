@@ -6,15 +6,23 @@ $this->title = 'Len Legacy';
 ?>
 <div class="site-index">
 
-    <div class="jumbotron">
-        <h3>Klasemen Len Legacy Tournamen</h3>
-
-        <small class="text-small">You have successfully created your Yii-powered application.</small>
-    </div>
+	<div class="col-md-12" style="margin-bottom:15px">
+		<div class="col-md-4" style="text-align:center;">
+			<image src="/images/logolegacy.png" width=500>
+		</div>
+		<div class="col-md-4" style="text-align:center;">
+			<h3>Klasemen Len Legacy Mobile Legends Tournament</h3>
+			<h2>Season 2</h2>
+		</div>
+		<div class="col-md-4" style="text-align:center;">
+		<image src="/images/logomobilelegends.png" width=500>
+		</div>
+	</div>
     <div class="col-lg-12">
 		<table class="table table-striped table-bordered">
 			<thead>
 				<tr>
+					<th style="width:2%;text-align:center;vertical-align:middle;">Rank</th>
 					<th style="width:10%;text-align:center;vertical-align:middle;">Player</th>
 					<th style="width:4%;text-align:center;vertical-align:middle;">Play</th>
 					<th style="width:4%;text-align:center;vertical-align:middle;">Win</th>
@@ -30,22 +38,26 @@ $this->title = 'Len Legacy';
 			</thead>
 			<tbody>
 				<?php
+					$no = 1;
 					foreach($model as $value){
 						//var_dump($value);
 					//var_dump($value->name);
 						echo '<tr>
-							<td>'.$value['name'].'</td>
-							<td>'.$value['play'].'</td>
-							<td>'.$value['win'].'</td>
-							<td>'.$value['lose'].'</td>
-							<td>'.$value['kill'].'</td>
-							<td>'.$value['death'].'</td>
-							<td>'.$value['assist'].'</td>
-							<td>'.$value['totalscore'].'</td>
-							<td>'.$value['avgscore'].'</td>
-							<td>'.$value['mvpwinning'].'</td>
-							<td>'.$value['mvplose'].'</td>
+							<td style="text-align:center;">'.$no.'</td>
+							<td><a href="'.Yii::$app->request->baseUrl.'/player/view?id='.$value['playerid'].'">'.$value['name'].'</a></td>
+							<td style="text-align:center;">'.$value['play'].'</td>
+							<td style="text-align:center;">'.$value['win'].'</td>
+							<td style="text-align:center;">'.$value['lose'].'</td>
+							<td style="text-align:center;">'.$value['kill'].'</td>
+							<td style="text-align:center;">'.$value['death'].'</td>
+							<td style="text-align:center;">'.$value['assist'].'</td>
+							<td style="text-align:center;">'.$value['totalscore'].'</td>
+							<td style="text-align:center;">'.$value['avgscore'].'</td>
+							<td style="text-align:center;">'.$value['mvpwinning'].'</td>
+							<td style="text-align:center;">'.$value['mvplose'].'</td>
 						</tr>';
+
+						$no++;
 					}
 					
 				?>

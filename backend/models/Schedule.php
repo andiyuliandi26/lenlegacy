@@ -16,7 +16,7 @@ use Yii;
  * @property Gamedetails[] $gamedetails
  * @property Season $season
  */
-class Games extends \yii\db\ActiveRecord
+class Schedule extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -47,11 +47,11 @@ class Games extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'gamename' => 'Game ID',
-            'gamedate' => 'Game Date',
-            'seasonid' => 'Season Name',
-            'gameduration' => 'Game Duration',
-            'status' => 'Game Status'
+            'gamename' => 'Gamename',
+            'gamedate' => 'Gamedate',
+            'seasonid' => 'Seasonid',
+            'gameduration' => 'Gameduration',
+            'status' => 'Status Game'
         ];
     }
 
@@ -73,10 +73,10 @@ class Games extends \yii\db\ActiveRecord
 
     /**
      * {@inheritdoc}
-     * @return GamesQuery the active query used by this AR class.
+     * @return ScheduleQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new GamesQuery(get_called_class());
+        return new ScheduleQuery(get_called_class());
     }
 }
