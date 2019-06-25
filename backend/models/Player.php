@@ -72,7 +72,7 @@ class Player extends \yii\db\ActiveRecord
      */
     public function getGamedetails()
     {
-        return $this->hasMany(Gamedetails::className(), ['playerid' => 'id']);
+        return $this->hasMany(GameDetails::className(), ['playerid' => 'id']);
     }
 
     /**

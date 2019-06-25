@@ -62,7 +62,7 @@ class Hero extends \yii\db\ActiveRecord
      */
     public function getGamedetails()
     {
-        return $this->hasMany(Gamedetails::className(), ['heroid' => 'id']);
+        return $this->hasMany(GameDetails::className(), ['heroid' => 'id']);
     }
 
     /**

@@ -60,7 +60,7 @@ class Games extends \yii\db\ActiveRecord
      */
     public function getGamedetails()
     {
-        return $this->hasMany(Gamedetails::className(), ['gameid' => 'id']);
+        return $this->hasMany(GameDetails::className(), ['gameid' => 'id']);
     }
 
     /**
