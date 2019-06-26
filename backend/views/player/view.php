@@ -33,7 +33,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                     ]) ?>
                 </div>
-                    
+                <div class=col-md-3>
+                    <?php
+                        //print_r(array_sum($model->gamedetails->kill));
+                    ?>
+                </div>      
         </div>
     </div>
 
@@ -100,8 +104,21 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <?php
         //print_r($model->gamedetails);
+        $totalKill = 0;
+        $totalAssist = 0;
         foreach($model->gamedetails as $value){
-            print_r($value->game->season->seasonname);
+            $totalKill = $totalKill + $value->kill;
+            $totalAssist = $totalAssist + $value->assist;
+            print_r($value->kill);
+        }
+
+        echo $totalKill;
+        $rank = 1;
+        foreach($standing as $value){
+            if($value['playerid'] == $model->id){
+                echo 'Current Rank : '.$rank; 
+            }
+            $rank++;
         }
     ?>
     

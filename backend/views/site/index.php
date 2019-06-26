@@ -24,10 +24,11 @@ $this->title = 'Len Legacy';
 			<thead>
 				<tr>
 					<th style="width:2%;text-align:center;vertical-align:middle;">Rank</th>
-					<th style="width:10%;text-align:center;vertical-align:middle;">Player</th>
+					<th style="width:10%;text-align:center;vertical-align:middle;">Match</th>
 					<th style="width:4%;text-align:center;vertical-align:middle;">Play</th>
 					<th style="width:4%;text-align:center;vertical-align:middle;">Win</th>
 					<th style="width:4%;text-align:center;vertical-align:middle;">Lose</th>
+					<th style="width:4%;text-align:center;vertical-align:middle;">Win Rate</th>
 					<th style="width:4%;text-align:center;vertical-align:middle;">Kill</th>
 					<th style="width:4%;text-align:center;vertical-align:middle;">Death</th>
 					<th style="width:4%;text-align:center;vertical-align:middle;">Assist</th>                              
@@ -49,6 +50,7 @@ $this->title = 'Len Legacy';
 							<td style="text-align:center;">'.$value['play'].'</td>
 							<td style="text-align:center;">'.$value['win'].'</td>
 							<td style="text-align:center;">'.$value['lose'].'</td>
+							<td style="text-align:center;">'.$value['winrate'].'%</td>
 							<td style="text-align:center;">'.$value['kill'].'</td>
 							<td style="text-align:center;">'.$value['death'].'</td>
 							<td style="text-align:center;">'.$value['assist'].'</td>

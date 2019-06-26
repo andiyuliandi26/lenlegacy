@@ -86,9 +86,10 @@ class SiteController extends Controller
 				'sum(t2.death) as death', 
 				'sum(t2.assist) as assist', 
 				'(sum(t2.rating) + sum((t2.ismvpwinning * 1.5)) + sum(t2.ismvplose)) as totalscore', 
-				'avg((t2.rating + (t2.ismvpwinning * 1.5) + t2.ismvplose)) as avgscore',
+				'round(avg((t2.rating + (t2.ismvpwinning * 1.5) + t2.ismvplose)),1) as avgscore',
 				'sum(t2.ismvpwinning) as mvpwinning',
-				'sum(t2.ismvplose) as mvplose'
+                'sum(t2.ismvplose) as mvplose',
+                'cast((sum(t2.isvictory)/count(t2.id)) * 100 as decimal(10,2)) as winrate'
 			])
 			//->joinWith(['gamedetails'])
 			->from('player t1')
