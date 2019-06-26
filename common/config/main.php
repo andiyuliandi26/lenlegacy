@@ -17,5 +17,5 @@ return [
             ],
         ],
     ],
-    'name' => 'Len Legacy',
+    'name' => 'LEGACY (Len Gamers Community)',
 ];

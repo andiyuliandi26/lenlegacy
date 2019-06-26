@@ -22,6 +22,14 @@ AppAsset::register($this);
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+<style>
+  .ui-autocomplete {
+    max-height: 200px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+  }
+</style>
 </head>
 <body>
 <?php $this->beginBody() ?>
@@ -36,7 +44,7 @@ AppAsset::register($this);
         ],
     ]);
     $menuItems = [
-        ['label' => 'Standings', 'url' => ['/site/index']],
+        ['label' => 'Standing', 'url' => ['/site/index']],
         ['label' => 'Schedules', 'url' => ['/schedule/index']],
         ['label' => 'Results', 'url' => ['/games/index']],
         ['label' => 'Hero', 'url' => ['/hero/index']],
