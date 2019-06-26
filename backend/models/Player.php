@@ -60,7 +60,7 @@ class Player extends \yii\db\ActiveRecord
             'status' => 'Status',
             'image' => 'Image',
             'gameid' => 'Game ID',
-            'nohp' => 'Nohp',
+            'nohp' => 'No Handphone',
             'tiername' => 'Tier',
 			'playerfullname' => 'Fullname',
 			'play' => 'Play',

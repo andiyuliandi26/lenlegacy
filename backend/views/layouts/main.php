@@ -53,7 +53,7 @@ AppAsset::register($this);
         //['label' => 'Games', 'url' => ['/games/index']]
     ];
     if (Yii::$app->user->isGuest) {
-        //$menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
         
         $menuItems[] = '<li>'

@@ -7,7 +7,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel backend\models\GamesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Games';
+$this->title = 'Games Result';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="games-index">
@@ -15,7 +15,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Games', ['create'], ['class' => 'btn btn-success']) ?>
+    <?php
+        if (!Yii::$app->user->isGuest){
+            echo Html::a('Create Games', ['create'], ['class' => 'btn btn-success']);
+        }
+    ?>
     </p>
 
     <?php 
@@ -27,7 +31,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],			
-            ['class' => 'yii\grid\ActionColumn'],            
+            ['class' => 'yii\grid\ActionColumn',
+            'visibleButtons' => [
+                'update' => function ($model) {
+                    return !Yii::$app->user->isGuest;
+                },
+                'delete' => function ($model) {
+                    return !Yii::$app->user->isGuest;
+                },
+            ]],            
             'season.seasonname',
             'gamename',
             'gamedate',

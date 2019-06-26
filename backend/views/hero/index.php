@@ -15,7 +15,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Hero', ['create'], ['class' => 'btn btn-success']) ?>
+    <?php
+        if (!Yii::$app->user->isGuest){
+            echo Html::a('Create Games', ['create'], ['class' => 'btn btn-success']);
+        }
+    ?>
     </p>
 
     <?php Pjax::begin(); ?>
@@ -26,11 +30,18 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
+            ['class' => 'yii\grid\ActionColumn',
+            'visibleButtons' => [
+                'update' => function ($model) {
+                    return !Yii::$app->user->isGuest;
+                },
+                'delete' => function ($model) {
+                    return !Yii::$app->user->isGuest;
+                },
+            ]],
             //'id',
             [
-
-                'attribute' => 'images',    
+                'label' => 'images',    
                 'format' => 'html',    
                 'label' => 'Hero Image',    
                 'value' => function ($data) {    
@@ -39,12 +50,51 @@ $this->params['breadcrumbs'][] = $this->title;
                 },    
             ],
             'heroname',
-            'durability',
-            'offense',
-            'abilityeffect',
-            'difficulty',
-            //'images',
-            ['class' => 'yii\grid\ActionColumn'],
+            [   
+                'attribute' => 'durability',
+                'label' => 'durability',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return '<div class="progress">
+                                <div class="progress-bar  progress-bar-warning" role="progressbar" aria-valuenow="'.$model->durability.'" aria-valuemin="0" aria-valuemax="100" style="width: '.$model->durability.'%;">
+                                    <span class="sr-only"></span>
+                                </div>
+                            </div>';
+                }
+            ],
+            [
+                'attribute' => 'offense',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return '<div class="progress">
+                                <div class="progress-bar  progress-bar-danger" role="progressbar" aria-valuenow="'.$model->offense.'" aria-valuemin="0" aria-valuemax="100" style="width: '.$model->offense.'%;">
+                                    <span class="sr-only"></span>
+                                </div>
+                            </div>';
+                }
+            ],
+            [
+                'attribute' => 'abilityeffect',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return '<div class="progress">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="'.$model->abilityeffect.'" aria-valuemin="0" aria-valuemax="100" style="width: '.$model->abilityeffect.'%;">
+                                    <span class="sr-only"></span>
+                                </div>
+                            </div>';
+                }
+            ],
+            [
+                'attribute' => 'difficulty',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return '<div class="progress">
+                                <div class="progress-bar  progress-bar-success" role="progressbar" aria-valuenow="'.$model->difficulty.'" aria-valuemin="0" aria-valuemax="100" style="width: '.$model->difficulty.'%;">
+                                    <span class="sr-only"></span>
+                                </div>
+                            </div>';
+                }
+            ]
         ],
     ]); ?>
 

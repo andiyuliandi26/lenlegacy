@@ -15,7 +15,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Player', ['create'], ['class' => 'btn btn-success']) ?>
+    <?php
+        if (!Yii::$app->user->isGuest){
+            echo Html::a('Create Player', ['create'], ['class' => 'btn btn-success']);
+        }
+    ?>
     </p>
 
     <?php Pjax::begin(); ?>
@@ -26,16 +30,31 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            //'id',
-            'name',
+            ['class' => 'yii\grid\ActionColumn',
+            'visibleButtons' => [
+                'update' => function ($model) {
+                    return !Yii::$app->user->isGuest;
+                },
+                'delete' => function ($model) {
+                    return !Yii::$app->user->isGuest;
+                },
+                'view' => function ($model) {
+                    return "";
+                },
+            ]],
+            [
+                'attribute' => 'name',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return '<a href='.Yii::$app->request->baseUrl.'/player/view?id='.$model->id.'"">'.$model->name.'</a>';
+                }
+            ],
             'nickname',
             'gameid',
             'nohp',
             'tiername',
-            'status',
+            //'status',
             //'image',
-            ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
 

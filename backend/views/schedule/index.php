@@ -15,7 +15,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h3><?= Html::encode($this->title) ?></h3>
 
     <p>
-        <?= Html::a('Create New Games', ['/games/create'], ['class' => 'btn btn-success']) ?>
+        <?php
+            if (!Yii::$app->user->isGuest){
+                echo Html::a('Create New Games', ['/games/create'], ['class' => 'btn btn-success']);
+            }
+        ?>
     </p>
     
     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">

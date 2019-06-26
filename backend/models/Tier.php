@@ -38,7 +38,7 @@ class Tier extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'tiername' => 'Tiername',
+            'tiername' => 'Tier Name',
         ];
     }
 

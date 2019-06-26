@@ -8,28 +8,32 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
 $this->title = 'Login';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
+    <div class="col-md-4 col-md-offset-4">
+        <div class="panel panel-info">
+            
+                <div class="panel-body">
+                    <div class="col-md-12" style="text-align:center;margin-bottom:10px;">
+                        <img src="/images/logolegacy.png" width=250>
+                    </div>
+                    <div class="col-md-12">                    
+                    <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
-    <p>Please fill out the following fields to login:</p>
+                        <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
 
-    <div class="row">
-        <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
+                        <?= $form->field($model, 'password')->passwordInput() ?>
 
-                <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+                        <?= $form->field($model, 'rememberMe')->checkbox() ?>
 
-                <?= $form->field($model, 'password')->passwordInput() ?>
+                        <div class="form-group">
+                            <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                        </div>
 
-                <?= $form->field($model, 'rememberMe')->checkbox() ?>
-
-                <div class="form-group">
-                    <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                    <?php ActiveForm::end(); ?>
+                    </div>
                 </div>
-
-            <?php ActiveForm::end(); ?>
+            </div>
         </div>
     </div>
 </div>

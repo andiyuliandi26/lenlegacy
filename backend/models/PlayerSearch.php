@@ -42,7 +42,8 @@ class PlayerSearch extends Player
     public function search($params)
     {
         $query = Player::find();
-        $query->joinWith(['tier']);
+        $query->joinWith(['tier'])
+            ->orderBy('name');
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([

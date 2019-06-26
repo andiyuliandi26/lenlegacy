@@ -49,10 +49,10 @@ class Season extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'league' => 'League',
-            'seasonname' => 'Seasonname',
-            'tglmulai' => 'Tglmulai',
-            'tglselesai' => 'Tglselesai',
-            'jumlahpeserta' => 'Jumlahpeserta',
+            'seasonname' => 'Season Name',
+            'tglmulai' => 'Tanggal Mulai',
+            'tglselesai' => 'Tanggal Selesai',
+            'jumlahpeserta' => 'Jumlah Peserta',
             'status' => 'Status',
         ];
     }
