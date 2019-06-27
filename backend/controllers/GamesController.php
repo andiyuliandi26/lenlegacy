@@ -30,7 +30,7 @@ class GamesController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['create','update'],
+                        'actions' => ['create','update','savegames'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],

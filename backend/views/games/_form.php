@@ -184,8 +184,8 @@ $heroauto = Hero::find()->select(['heroname as value', 'heroname as label','id a
     <div class="panel panel-primary">
         <div class="panel-heading">Games</div>
         <div class="panel-body">
-			<div class="col-md-12">
-				<div class="col-md-2">
+			<div class="col-sm-12">
+				<div class="col-sm-2">
 					<?php
 						$season=Season::find()->all();
 						$listData=ArrayHelper::map($season,'id','seasonname');
@@ -193,14 +193,14 @@ $heroauto = Hero::find()->select(['heroname as value', 'heroname as label','id a
 					<input type="hidden" name="games-id" id="games-id" value="<?= $model->id; ?>">
 					<?= $form->field($model, 'seasonid')->dropDownList($listData,['prompt'=>'Silahkan pilih...']); ?>
 				</div>
-				<div class="col-md-4">
-					<div class="col-md-12">
+				<div class="col-sm-4">
+					<div class="col-sm-12">
 					    <label>Game Date</label>
                     </div>
 					<?php
 						$explode = explode(' ', $model->gamedate);
 					?>
-					<div class="col-md-7">                
+					<div class="col-sm-7">                
 						<?= DatePicker::widget([
 							'name' => 'gamedate',
 							'id' => 'gamedate',
@@ -212,11 +212,11 @@ $heroauto = Hero::find()->select(['heroname as value', 'heroname as label','id a
 								'format' => 'yyyy-mm-dd',
 								'language' =>'id',
 								'minViewMode'=>0,
-								'endDate'=>'+0y',
+								//'endDate'=>'+0y',
 							]
 						]); ?>
 					</div>
-					<div class="col-md-5">
+					<div class="col-sm-5">
 						<?= TimePicker::widget([
 							'id' => 'gametime',
 							'name' => 'gametime',
@@ -229,7 +229,7 @@ $heroauto = Hero::find()->select(['heroname as value', 'heroname as label','id a
 						]); ?>
 					</div>                    
 				</div>
-                <div class="col-md-2">
+                <div class="col-sm-2">
                     <?= $form->field($model, 'status')->dropDownList(['Scheduled'=> 'Scheduled' ,'Done' => 'Done']); ?>
                 </div>
 			</div>
@@ -240,7 +240,7 @@ $heroauto = Hero::find()->select(['heroname as value', 'heroname as label','id a
     <div class="panel panel-default">
         <div class="panel-heading">Player Detail</div>
         <div class="panel-body">
-            <div class="col-md-12">
+            <div class="col-md-12" style="overflow:scroll;">
                 <h4>Team A</h4>
                 <?php 
                     $gamedetails = GameDetails::find();
