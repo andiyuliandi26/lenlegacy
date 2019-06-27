@@ -23,9 +23,12 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
     
     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-        <?php
+        <?php    
             //print_r($dataProvider);
             foreach($model as $values){
+                $datecreate = date_create($values->gamedate);
+                ///print_r($datecreate);
+                
                 echo '<div class="panel panel-default">
                     <div class="panel-heading" role="tab" id="'.$values->id.'">
                     <h4 class="panel-title">
@@ -34,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             '.$values->gamename.'
                             </a></li>
                             <li class="list-group-item">Game number : '.$values->id.'</li>
-                            <li class="list-group-item">Game Date : '.$values->gamedate.'</li>
+                            <li class="list-group-item">Game Date : '.date_format($datecreate, 'd-m-Y H:i:s').'</li>
                         </ul>
                         
                         <br>
