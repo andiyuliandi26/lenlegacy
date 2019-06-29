@@ -26,12 +26,12 @@ $this->params['breadcrumbs'][] = $this->title;
             //print_r($value->kill);
         }
 
-        echo $totalKill;
+        //echo $totalKill;
         $rank = 1;
         $currentRank = 40;
         foreach($standing as $value){
             if($value['playerid'] == $model->id){
-                echo 'Current Rank : '.$rank; 
+                //echo 'Current Rank : '.$rank; 
                 $currentRank = $rank;
             }
             $rank++;
