@@ -94,8 +94,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                 }else{
                                     $banned = "";
                                 }
+                                $heroname = $value->heroid != null ? $value->hero->heroname : "";
                                 echo '<tr '.$banned.'>
-                                    <td style="text-align:center;">'.$value->hero->heroname.'</td>
+                                    <td style="text-align:center;">'.$heroname.'</td>
                                     <td style="text-align:center;">'.$value->herodamage.'</td>
                                     <td style="text-align:center;">'.$value->kill.'</td>
                                     <td style="text-align:center;">'.$value->death.'</td>
