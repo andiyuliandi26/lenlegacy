@@ -10,6 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use \yii\db\Query;
+use backend\models\GameDetails;
 
 /**
  * PlayerController implements the CRUD actions for Player model.
@@ -100,9 +101,27 @@ class PlayerController extends Controller
 			$command = $query->createCommand();
             $data = $command->queryAll(); 
             
+            $game = GameDetails::find()
+                ->select('*, 
+                    count(heroid) as herodamage, 
+                    sum(gamedetails.kill) as kill,
+                    sum(gamedetails.death) as death,
+                    sum(gamedetails.assist) as assist,
+                    avg(gamedetails.rating) as rating,
+                    sum(gamedetails.isvictory) as isvictory,
+                    (count(heroid) - sum(gamedetails.isvictory)) as ismvplose,
+                    ')
+                ->joinWith(['game'])
+                ->where('playerid = '.$id)
+                ->groupBy(['heroid'])
+                ->orderBy('count(heroid) desc, kill desc, rating desc')
+                //->limit(1)
+                ->all();
+
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'standing' => $data
+            'standing' => $data,
+            'games' => $game
         ]);
     }
 

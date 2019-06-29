@@ -5,6 +5,7 @@ use yii\widgets\DetailView;
 use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
 
+
 /* @var $this yii\web\View */
 /* @var $model backend\models\Player */
 
@@ -13,6 +14,29 @@ $this->params['breadcrumbs'][] = ['label' => 'Players', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
+    <?php
+        //print_r($model->gamedetails);]
+        $getData = (array) $model->gamedetails;
+        //print_r($games);
+        $totalKill = 0;
+        $totalAssist = 0;
+        foreach($model->gamedetails as $value){
+            $totalKill = $totalKill + $value->kill;
+            $totalAssist = $totalAssist + $value->assist;
+            //print_r($value->kill);
+        }
+
+        echo $totalKill;
+        $rank = 1;
+        $currentRank = 40;
+        foreach($standing as $value){
+            if($value['playerid'] == $model->id){
+                echo 'Current Rank : '.$rank; 
+                $currentRank = $rank;
+            }
+            $rank++;
+        }
+    ?>              
 <div class="player-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -20,23 +44,72 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="panel-heading">Basic Info</div>
             <div class="panel-body">
                 <div class=col-md-3>
-                    <?= DetailView::widget([
-                        'model' => $model,
-                        'attributes' => [
-                            'name',
-                            'nickname',
-                            'tier.tiername',
-                            //'status',
-                            //'image',
-                            //'gameid',
-                            'nohp',
-                        ],
-                    ]) ?>
+                    <table id="w0" class="table table-striped table-bordered detail-view">
+                        <tbody>
+                            <tr>
+                                <th>Name</th>
+                                <td><?= $model->name ?></td>
+                            </tr>
+                            <tr>
+                                <th>Nickname</th>
+                                <td><?= $model->nickname ?></td>
+                            </tr>
+                            <tr>
+                                <th>No Handphone</th>
+                                <td><?= $model->nohp ?></td>
+                            </tr>
+                            <tr>
+                                <th>Tier Name</th>
+                                <td><?= $model->tier->tiername ?></td>
+                            </tr>
+                            <tr>
+                                <th>Current Rank</th>
+                                <td><?= $currentRank ?></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class=col-md-3>
-                    <?php
-                        //print_r(array_sum($model->gamedetails->kill));
-                    ?>
+                <div class=col-md-9>
+                
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th style="width:7%;text-align:center;vertical-align:middle;">Hero</th>
+                            <th style="width:7%;text-align:center;vertical-align:middle;">Play</th>
+                            <th style="width:4%;text-align:center;vertical-align:middle;">Kill</th>
+                            <th style="width:4%;text-align:center;vertical-align:middle;">Death</th>
+                            <th style="width:4%;text-align:center;vertical-align:middle;">Assist</th>                              
+                            <th style="width:4%;text-align:center;vertical-align:middle;">AVG Rating</th>
+                            <th style="width:2%;text-align:center;vertical-align:middle;">Win</th>
+                            <th style="width:2%;text-align:center;vertical-align:middle;">Lose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                            $no = 1;
+                            
+                            foreach($games as $value){
+                                if($no == 1){
+                                    $banned = 'style="background-color:red;color:white;"';
+                                }else{
+                                    $banned = "";
+                                }
+                                echo '<tr '.$banned.'>
+                                    <td style="text-align:center;">'.$value->hero->heroname.'</td>
+                                    <td style="text-align:center;">'.$value->herodamage.'</td>
+                                    <td style="text-align:center;">'.$value->kill.'</td>
+                                    <td style="text-align:center;">'.$value->death.'</td>
+                                    <td style="text-align:center;">'.$value->assist.'</td>
+                                    <td style="text-align:center;">'.$value->rating.'</td>
+                                    <td style="text-align:center;">'.$value->isvictory.'</td>                                  
+                                    <td style="text-align:center;">'.$value->ismvplose.'</td>
+                                </tr>';
+        
+                                $no++;                                
+                            }
+                        ?>
+                    </tbody>
+                </table>
                 </div>      
         </div>
     </div>
@@ -102,24 +175,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 </table>
         </div>
     </div>
-    <?php
-        //print_r($model->gamedetails);
-        $totalKill = 0;
-        $totalAssist = 0;
-        foreach($model->gamedetails as $value){
-            $totalKill = $totalKill + $value->kill;
-            $totalAssist = $totalAssist + $value->assist;
-            print_r($value->kill);
-        }
-
-        echo $totalKill;
-        $rank = 1;
-        foreach($standing as $value){
-            if($value['playerid'] == $model->id){
-                echo 'Current Rank : '.$rank; 
-            }
-            $rank++;
-        }
-    ?>
+    
     
 </div>
