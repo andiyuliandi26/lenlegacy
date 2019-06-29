@@ -112,7 +112,7 @@ class PlayerController extends Controller
                     (count(heroid) - sum(gamedetails.isvictory)) as ismvplose,
                     ')
                 ->joinWith(['game'])
-                ->where('playerid = '.$id)
+                ->where('playerid = '.$id.' and games.status = "Done"')
                 ->groupBy(['heroid'])
                 ->orderBy('count(heroid) desc, kill desc, rating desc')
                 //->limit(1)
