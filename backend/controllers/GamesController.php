@@ -184,6 +184,7 @@ class GamesController extends Controller
 
                         $gamedetails->gameid = $games->id;
                         $gamedetails->team = $getDetails["team"];
+                        $gamedetails->isadditional = $getDetails["isadditional"];
                         $gamedetails->playerid = $getDetails["playerid"];
                         $gamedetails->heroid = $getDetails["heroid"];
                         $gamedetails->kill = $getDetails["kill"];

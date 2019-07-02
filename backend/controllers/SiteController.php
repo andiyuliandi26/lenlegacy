@@ -9,6 +9,8 @@ use common\models\LoginForm;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use backend\models\Player;
+use backend\models\Standing;
+use backend\models\GameDetails;
 use \yii\db\Query;
 /**
  * Site controller
@@ -63,48 +65,20 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-		//$query = Player::find()
-			//->select('name, count(gamedetails.id) as play')
-			//->joinWith(['gamedetails'])
-			//->leftjoin('gamedetails','player.id = gamedetails.playerid')
-			//->groupby(['player.id'])
-			//->asArray()
-			//->all();
-
-            $query = new Query();
-            $subQuery = (new \yii\db\Query())
-                ->select('t2.*')
-                ->from('gamedetails t2')
-                ->join('INNER JOIN', 'games g', 'g.id = t2.gameid and g.status ="Done"');
-			$query->select([
-                't1.id as playerid',
-                'CONCAT( t1.name," (",t1.nickname,")") as name',
-				'count(t2.id) as play',
-				'sum(t2.isvictory) as win', 
-				'(count(t1.id) - sum(t2.isvictory)) as lose', 
-				'sum(t2.kill) as kill', 
-				'sum(t2.death) as death', 
-				'sum(t2.assist) as assist', 
-				'(sum(t2.rating) + sum((t2.ismvpwinning * 1.5)) + sum(t2.ismvplose)) as totalscore', 
-				'round(avg((t2.rating + (t2.ismvpwinning * 1.5) + t2.ismvplose)),1) as avgscore',
-				'sum(t2.ismvpwinning) as mvpwinning',
-                'sum(t2.ismvplose) as mvplose',
-                'cast((sum(t2.isvictory)/count(t2.id)) * 100 as decimal(10,2)) as winrate'
-			])
-			//->joinWith(['gamedetails'])
-			->from('player t1')
-            ->join('LEFT OUTER JOIN',['t2' => $subQuery],'t1.id = t2.playerid')
-            //->join('right JOIN','games t3','t2.gameid = t3.id')
-            //->where('t3.Status = "Done"')
-			->groupBy(['t1.id'])
-			->orderBy('totalscore DESC, name');
-			//->asArray()
-			//->all();
-			$command = $query->createCommand();
-			$data = $command->queryAll(); 
-
+        $data = Standing::getDataStanding('totalscore DESC, kill DESC, assist DESC, name');
+        $stats = Standing::getDataStanding('totalrating DESC, kill DESC, assist DESC, name');
+        $mostkill = Standing::getDataReward('kill DESC');
+        $mostassist = Standing::getDataReward('assist DESC');
+        $mostdeath = Standing::getDataReward('death DESC');
+        $statistic = Standing::getDataStatistic('rating DESC, kill DESC, assist DESC');
+        
         return $this->render('index',[
-			'model' => $data
+            'model' => $data,
+            'stats' => $stats,
+            'statistic' => $statistic,
+            'mostkill' => $mostkill,
+            'mostassist' => $mostassist,
+            'mostdeath' => $mostdeath
 		]);
     }
 

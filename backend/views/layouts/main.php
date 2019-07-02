@@ -29,6 +29,10 @@ AppAsset::register($this);
     /* prevent horizontal scrollbar */
     overflow-x: hidden;
   }
+
+  body{
+      padding-top: 70px;
+  }
 </style>
 </head>
 <body>
@@ -40,7 +44,7 @@ AppAsset::register($this);
         'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar-inverse',
+            'class' => 'navbar-inverse  navbar-fixed-top',
         ],
     ]);
     $menuItems = [
@@ -53,6 +57,7 @@ AppAsset::register($this);
         //['label' => 'Games', 'url' => ['/games/index']]
     ];
     if (Yii::$app->user->isGuest) {
+        
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
         

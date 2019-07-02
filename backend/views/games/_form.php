@@ -102,6 +102,7 @@ $heroauto = Hero::find()->select(['heroname as value', 'heroname as label','id a
                     playerdetail = {
 						gamedetailsid: $('input[name=gamedetailsid]:eq('+ i +')').val(),
                         team: $('input[name=team]:eq('+ i +')').val(),
+                        isadditional: $('input[name=isadditional]:eq('+ i +')').val(), 
                         playerid: $('input[name=playerid]:eq('+ i +')').val(),
                         heroid: $('input[name=heroid]:eq('+ i +')').val(),
                         kill: $('input[name=kill]:eq('+ i +')').val(),
@@ -148,7 +149,7 @@ $heroauto = Hero::find()->select(['heroname as value', 'heroname as label','id a
                 var varname = $(this).attr('class'),
                 $arr = $('input[name=player]'),
                 index = $arr.index(this);
-                console.log(index);
+                //console.log(index);
                 $(".playerid:eq("+ index +")").val(ui.item.id);
             }
         }).focus(function () {
@@ -162,7 +163,7 @@ $heroauto = Hero::find()->select(['heroname as value', 'heroname as label','id a
                 var varname = $(this).attr('class'),
                 $arr = $('input[name=hero]'),
                 index = $arr.index(this);
-                console.log(index);
+                //console.log(index);
                 $(".heroid:eq("+ index +")").val(ui.item.id);
             }
         }).focus(function () {
@@ -177,6 +178,71 @@ $heroauto = Hero::find()->select(['heroname as value', 'heroname as label','id a
         $('#gamedetails-heroid').val('');
         $('#gamedetails-hero').val('');
 	}
+
+    function addPlayer(){
+        ///console.log($('#games-teamlist').val());
+        var team = $('#games-teamlist').val();
+        $('#tableTeam'+team).append('<tr><td>'+
+                                        '<input class="form-control" type="hidden" value="0" name="gamedetailsid">'+
+                                        '<input class="form-control" type="hidden" value="1" name="isadditional">'+
+                                        '<input class="form-control" type="hidden" value="' + team + '" name="team">'+
+                                        '<input class="form-control playerauto" type="text" value="" name="player" onfocus="playerList(this);">'+
+                                        '<input class="form-control playerid" type="hidden" value="" name="playerid">'+
+                                    '</td>'+
+                                    '<td>'+
+                                        '<input class="form-control heroauto" type="text" value="" name="hero" onfocus="heroList(this);">'+
+                                        '<input class="form-control heroid" type="hidden" value="" name="heroid">'+
+                                    '</td>'+
+                                    '<td><input class="form-control" type="text" value="0" name="kill"></td>'+
+                                    '<td><input class="form-control" type="text" value="0" name="death"></td>'+
+                                    '<td><input class="form-control" type="text" value="0" name="assist"></td>'+
+                                    '<td><input class="form-control" type="text" value="0" name="rating"></td>'+
+                                    '<td>'+
+                                        '<select class="form-control medal" name="medal">'+
+                                            '<option value=""></option>'+
+                                            '<option value="AFK" >AFK</option>'+
+                                            '<option value="Bronze" >Bronze</option>'+
+                                            '<option value="Silver" >Silver</option>'+
+                                            '<option value="Gold" >Gold</option>'+
+                                        '</select>'+
+                                    '</td>'+
+                                    '<td><input class="form-control isvictory" type="checkbox" value="1" name="isvictory"></td>'+
+                                    '<td><input class="form-control ismvpwinning" type="checkbox" value="1" name="ismvpwinning"></td>'+
+                                    '<td><input class="form-control ismvplose" type="checkbox" value="1" name="ismvplose"></td>'+
+                                    '</tr>');
+    }
+
+    function playerList(obj){
+        $(obj).autocomplete({
+            minLength: 0,
+            source: <?= json_encode($playerauto) ?>,
+            select: function (event, ui) {
+                var varname = $(this).attr('class'),
+                $arr = $('input[name=player]'),
+                index = $arr.index(this);
+                //console.log(index);
+                $(".playerid:eq("+ index +")").val(ui.item.id);
+            }
+        }).focus(function () {
+            $(this).autocomplete("search", "");
+        });
+    }
+
+    function heroList(obj){
+        $(obj).autocomplete({
+            minLength: 0,
+            source: <?= json_encode($heroauto) ?>,
+            select: function (event, ui) {
+                var varname = $(this).attr('class'),
+                $arr = $('input[name=hero]'),
+                index = $arr.index(this);
+                //console.log(index);
+                $(".heroid:eq("+ index +")").val(ui.item.id);
+            }
+        }).focus(function () {
+            $(this).autocomplete("search", "");
+        });
+    }
 </script>
 <div class="games-form">
     <?php $form = ActiveForm::begin(); ?>
@@ -233,6 +299,14 @@ $heroauto = Hero::find()->select(['heroname as value', 'heroname as label','id a
                     <?= $form->field($model, 'status')->dropDownList(['Scheduled'=> 'Scheduled' ,'Done' => 'Done']); ?>
                 </div>
 			</div>
+            <div class="col-md-12">
+                <div class="col-sm-1">
+                    <?= $form->field($model, 'teamList')->dropDownList(['A'=> 'A' ,'B' => 'B']); ?>
+                </div>
+                <div class="col-sm-2" style="padding-top:25px;">
+                    <button class="btn btn-primary" onclick="addPlayer();" type="button">Add Additional Player</button>
+                </div>
+            </div>
 			
         </div>
     </div>
@@ -240,7 +314,7 @@ $heroauto = Hero::find()->select(['heroname as value', 'heroname as label','id a
     <div class="panel panel-default">
         <div class="panel-heading">Player Detail</div>
         <div class="panel-body">
-            <div class="col-md-12" style="overflow:scroll;">
+            <div class="col-md-12">
                 <h4>Team A</h4>
                 <?php 
                     $gamedetails = GameDetails::find();
@@ -284,6 +358,7 @@ $heroauto = Hero::find()->select(['heroname as value', 'heroname as label','id a
 									if($getPlayer->team == "A"){
                                         echo '<tr>
                                             <td><input class="form-control" type="hidden" value="'.$getPlayer->id.'" name="gamedetailsid">
+                                                <input class="form-control" type="hidden" value="'.$getPlayer->isadditional.'" name="isadditional">
                                                 <input class="form-control" type="hidden" value="'.$getPlayer->team.'" name="team">
                                                 <input class="form-control playerauto" type="text" value="'.$getPlayer->player->playerfullname.'" name="player">
                                                 <input class="form-control playerid" type="hidden" value="'.$getPlayer->playerid.'" name="playerid"> 
@@ -316,6 +391,7 @@ $heroauto = Hero::find()->select(['heroname as value', 'heroname as label','id a
                                         echo '<tr>
                                             <td>
                                                 <input class="form-control" type="hidden" value="0" name="gamedetailsid">
+                                                <input class="form-control" type="hidden" value="0" name="isadditional">
                                                 <input class="form-control" type="hidden" value="A" name="team">
                                                 <input class="form-control playerauto" type="text" value="" name="player">
                                                 <input class="form-control playerid" type="hidden" value="" name="playerid">
@@ -392,7 +468,8 @@ $heroauto = Hero::find()->select(['heroname as value', 'heroname as label','id a
 									echo '<tr>
 										<td>
 											<input class="form-control" type="hidden" value="'.$getPlayer->id.'" name="gamedetailsid">
-											<input class="form-control" type="hidden" value="'.$getPlayer->team.'" name="team">
+                                            <input class="form-control" type="hidden" value="'.$getPlayer->team.'" name="team">                                            
+                                            <input class="form-control" type="hidden" value="'.$getPlayer->isadditional.'" name="isadditional">
                                             <input class="form-control playerauto" type="text" value="'.$getPlayer->player->playerfullname.'" name="player">
                                             <input class="form-control playerid" type="hidden" value="'.$getPlayer->playerid.'" name="playerid">
                                         </td>
@@ -425,6 +502,7 @@ $heroauto = Hero::find()->select(['heroname as value', 'heroname as label','id a
                                             <td>
                                                 <input class="form-control" type="hidden" value="0" name="gamedetailsid">
                                                 <input class="form-control" type="hidden" value="B" name="team">
+                                                <input class="form-control" type="hidden" value="0" name="isadditional">
                                                 <input class="form-control playerauto" type="text" value="" name="player">
                                                 <input class="form-control playerid" type="hidden" value="" name="playerid">
                                             </td>

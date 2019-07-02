@@ -53,9 +53,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <tr>
                                         <th style="width:10%;text-align:center;vertical-align:middle;" rowspan="2">Player</th>
                                         <th style="width:10%;text-align:center;vertical-align:middle;" rowspan="2">Hero</th>
-                                        <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Kills</th>
-                                        <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Deaths</th>
-                                        <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Assists</th>                              
+                                        <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Kill</th>
+                                        <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Death</th>
+                                        <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Assist</th>                              
                                         <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Rating</th>
                                         <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Medal</th>
                                         <th style="width:2%;text-align:center;vertical-align:middle;" rowspan="2">Victory</th>

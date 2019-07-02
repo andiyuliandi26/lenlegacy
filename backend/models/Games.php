@@ -18,6 +18,7 @@ use Yii;
  */
 class Games extends \yii\db\ActiveRecord
 {
+    public $teamList;
     /**
      * {@inheritdoc}
      */

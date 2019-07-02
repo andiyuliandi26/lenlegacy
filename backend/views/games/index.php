@@ -37,13 +37,45 @@ $this->params['breadcrumbs'][] = $this->title;
                     return !Yii::$app->user->isGuest;
                 },
                 'delete' => function ($model) {
-                    return !Yii::$app->user->isGuest;
+                    return "";
+                },
+                'view' => function ($model) {
+                    return "";
                 },
             ]],            
             'season.seasonname',
-            'gamename',
+            [
+                'attribute' => 'name',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return '<a href='.Yii::$app->request->baseUrl.'/games/view?id='.$model->id.'"">'.$model->gamename.'</a>';
+                }
+            ],
             'gamedate',
-            'status'
+            'status',
+            [
+                'attribute' => 'name',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    $timA = "";
+                    $timB = "";
+
+                    foreach($model->gamedetails as $value){
+                        $playername = $value->player->name;
+                        if($value->isadditional){
+                            $playername = $value->player->name.' (Additional)';
+                        }
+                        if($value->team == 'A'){
+
+                            $timA .= $playername.', ';
+                        }else{
+                            $timB .= $playername.', ';
+                        }
+                    }
+
+                    return 'Team A : '.$timA.'<br>Team B : '.$timB;
+                }
+            ],
 
         ],
     ]); ?>

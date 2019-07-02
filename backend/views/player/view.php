@@ -151,6 +151,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?php
                             $no = 1;
                             foreach($model->gamedetails as $value){
+                                $isvictory = $value->isvictory ? "checked" : "";
+								$ismvpwinning = $value->ismvpwinning ? "checked" : "";
+                                $ismvplose = $value->ismvplose ? "checked" : "";
                                 $heroname = $value->heroid != null ? $value->hero->heroname : "";
                                     echo '<tr>
                                         <td style="text-align:center;">'.$no.'</td>
@@ -164,9 +167,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <td style="text-align:center;">'.$value->assist.'</td>
                                         <td style="text-align:center;">'.$value->rating.'</td>
                                         <td style="text-align:center;">'.$value->medal.'</td>                                    
-                                        <td style="text-align:center;">'.$value->isvictory.'</td>
-                                        <td style="text-align:center;">'.$value->ismvpwinning.'</td>
-                                        <td style="text-align:center;">'.$value->ismvplose.'</td>
+                                        <td style="text-align:center;"><input class="form-control" type="checkbox" value="1" name="isvictory" disabled '.$isvictory.'></td>
+                                        <td style="text-align:center;"><input class="form-control" type="checkbox" value="1" name="isvictory" disabled '.$ismvpwinning.'></td>
+                                        <td style="text-align:center;"><input class="form-control" type="checkbox" value="1" name="isvictory" disabled '.$ismvplose.'></td>
                                     </tr>';
             
                                     $no++;                                

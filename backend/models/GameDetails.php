@@ -34,6 +34,13 @@ use Yii;
  */
 class GameDetails extends \yii\db\ActiveRecord
 {
+    public $avgkill;
+    public $avgassist;
+    public $avgdeath;
+    public $avgrating;
+    public $play;
+    public $lose;
+    public $winrate;
     /**
      * {@inheritdoc}
      */
@@ -50,6 +57,7 @@ class GameDetails extends \yii\db\ActiveRecord
         return [
             [['gameid', 'playerid', 'heroid', 'herodamage', 'herodamagepersentage', 'turretdamage', 'turretdamagepersentage', 'damagetaken', 'damagetakenpersentage', 'kill', 'death', 'assist', 'isvictory', 'ismvpwinning', 'ismvplose'], 'integer'],
             [['rating'], 'number'],
+            [['isadditional'], 'safe'],
             [['team'], 'string', 'max' => 1],
             [['gold', 'medal'], 'string', 'max' => 45],
             [['gameid'], 'exist', 'skipOnError' => true, 'targetClass' => Games::className(), 'targetAttribute' => ['gameid' => 'id']],
@@ -84,6 +92,8 @@ class GameDetails extends \yii\db\ActiveRecord
             'isvictory' => 'Victory',
             'ismvpwinning' => 'MVP Winning',
             'ismvplose' => 'MVP Lose',
+            'isadditional' => 'Additional Player',
+            'additionalscore' => 'Additional Score'
         ];
     }
 
