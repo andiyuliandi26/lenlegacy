@@ -7,7 +7,7 @@ use Yii;
 
 class Standing
 {
-    public function getDataStanding($sort = "")
+    public static function getDataStanding($sort = "")
     {
         $query = new Query();
             $subQuery = (new \yii\db\Query())
@@ -48,7 +48,7 @@ class Standing
         return $data;
     }
 
-    public function getDataReward($sort = ""){
+    public static function getDataReward($sort = ""){
         $data = GameDetails::find()
                     ->select('*, 
                         sum(gamedetails.kill) as kill,
@@ -68,7 +68,7 @@ class Standing
         return $data[0]; 
     }
 
-    public function getDataStatistic($sort = ""){
+    public static function getDataStatistic($sort = ""){
         $data = GameDetails::find()
                     ->select('*, 
                         sum(gamedetails.kill) as kill,
