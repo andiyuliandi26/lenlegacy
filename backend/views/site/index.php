@@ -138,7 +138,7 @@ $this->title = 'Len Legacy';
 			</div>
 
 			<div class="tab-pane fade" id="reward-5"  style="background-color:#F5F5F5;">
-				<div class="col-md-3" style="padding:20px 20px 10px 10px;">
+				<div class="col-md-4" style="padding:20px 20px 10px 10px;">
 					<div class="panel panel-danger">
 						<div class="panel-heading">Most Kill Player</div>
 							<div class="panel-body">
@@ -162,7 +162,7 @@ $this->title = 'Len Legacy';
 					</div>
 				</div>
 
-				<div class="col-md-3" style="padding:20px 20px 10px 10px;">
+				<div class="col-md-4" style="padding:20px 20px 10px 10px;">
 					<div class="panel panel-success">
 						<div class="panel-heading">Most Assist Player</div>
 							<div class="panel-body">
@@ -186,7 +186,7 @@ $this->title = 'Len Legacy';
 					</div>
 				</div>
 
-				<div class="col-md-3" style="padding:20px 20px 10px 10px;">
+				<div class="col-md-4" style="padding:20px 20px 10px 10px;">
 					<div class="panel panel-warning">
 						<div class="panel-heading">Most Death Player</div>
 							<div class="panel-body">
