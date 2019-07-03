@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use \yii\db\Query;
 use backend\models\GameDetails;
+use backend\models\Standing;
 
 /**
  * PlayerController implements the CRUD actions for Player model.
@@ -69,39 +70,48 @@ class PlayerController extends Controller
      */
     public function actionView($id)
     {
-        $query = new Query();
-            $subQuery = (new \yii\db\Query())
-                ->select('t2.*')
-                ->from('gamedetails t2')
-                ->join('INNER JOIN', 'games g', 'g.id = t2.gameid and g.status ="Done"');
-			$query->select([
-                't1.id as playerid',
-                'CONCAT( t1.name," (",t1.nickname,")") as name',
-				'count(t2.id) as play',
-				'sum(t2.isvictory) as win', 
-				'(count(t1.id) - sum(t2.isvictory)) as lose', 
-				'sum(t2.kill) as kill', 
-				'sum(t2.death) as death', 
-				'sum(t2.assist) as assist', 
-				'(sum(t2.rating) + sum((t2.ismvpwinning * 1.5)) + sum(t2.ismvplose)) as totalscore', 
-				'round(avg((t2.rating + (t2.ismvpwinning * 1.5) + t2.ismvplose)),1) as avgscore',
-				'sum(t2.ismvpwinning) as mvpwinning',
-                'sum(t2.ismvplose) as mvplose',
-                'cast((sum(t2.isvictory)/count(t2.id)) * 100 as decimal(10,2)) as winrate'
-			])
-			//->joinWith(['gamedetails'])
-			->from('player t1')
-            ->join('LEFT OUTER JOIN',['t2' => $subQuery],'t1.id = t2.playerid')
-            //->join('right JOIN','games t3','t2.gameid = t3.id')
-            //->where('t3.Status = "Done"')
-			->groupBy(['t1.id'])
-			->orderBy('totalscore DESC, name');
-			//->asArray()
-			//->all();
-			$command = $query->createCommand();
-            $data = $command->queryAll(); 
+        $statistic = Standing::getDataStatistic('name, rating DESC, kill DESC, assist DESC');
+        
+        $standingList = [];
+        foreach($statistic as $value){
+
+             $standing = new Standing();
+             $standing->player = $value->player;
+             $standing->play = $value->play;
+             $standing->win = $value->isvictory;
+             $standing->lose = $value->lose;
+             $standing->kill = $value->kill;
+             $standing->death = $value->death;
+             $standing->assist = $value->assist;
+             $standing->mvpwinning = $value->ismvpwinning;
+             $standing->mvpwinningscore = $value->ismvpwinning * 1.5;
+             $standing->mvplose = $value->ismvplose;
+             $standing->avgkill = $value->avgkill;
+             $standing->avgassist = $value->avgassist;
+             $standing->avgdeath = $value->avgdeath;
+             $standing->avgrating = $value->avgrating;
+             $standing->rating = $value->rating;             
+             $standing->additionalscore = Standing::getDataAdditional($value->player->id);
+             $standing->totalrating = $value->rating + $standing->mvpwinningscore + $standing->mvplose + $standing->additionalscore;
+             $standing->winrate = round($value->winrate,2);
+
+             array_push($standingList, $standing);
+        }
+
+        $sort = array();
+        foreach($standingList as $k=>$v) {
+            $sort['totalrating'][$k] = $v->totalrating;
+            $sort['kill'][$k] = $v->kill;
+            $sort['assist'][$k] = $v->assist;
+        }
+
+        array_multisort(
+                $sort['totalrating'], SORT_DESC,
+                $sort['kill'],SORT_DESC,
+                $sort['assist'],SORT_DESC,
+                $standingList); 
             
-            $game = GameDetails::find()
+         $game = GameDetails::find()
                 ->select('*, 
                     count(heroid) as herodamage, 
                     sum(gamedetails.kill) as kill,
@@ -110,7 +120,7 @@ class PlayerController extends Controller
                     avg(gamedetails.rating) as rating,
                     sum(gamedetails.isvictory) as isvictory,
                     (count(heroid) - sum(gamedetails.isvictory)) as ismvplose,
-                    ')
+                ')
                 ->joinWith(['game'])
                 ->where('playerid = '.$id.' and games.status = "Done"')
                 ->groupBy(['heroid'])
@@ -120,7 +130,7 @@ class PlayerController extends Controller
 
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'standing' => $data,
+            'standing' => $standingList,
             'games' => $game
         ]);
     }

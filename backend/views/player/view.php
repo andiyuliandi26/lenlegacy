@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
         $rank = 1;
         $currentRank = 40;
         foreach($standing as $value){
-            if($value['playerid'] == $model->id){
+            if($value->player->id == $model->id){
                 //echo 'Current Rank : '.$rank; 
                 $currentRank = $rank;
             }
