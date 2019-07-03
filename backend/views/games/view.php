@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="panel panel-danger">
         <div class="panel-heading">Game Details</div>
             <div class="panel-body">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <h4>Team A</h4>
                  <table class="table table-striped table-bordered">
                     <thead>
@@ -55,6 +55,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     <tbody id="tableTeamA">
                         <?php
 							if(count($model->gamedetails) > 0){
+                                $totalKill = 0;
+                                $totalDeath = 0;
+                                $totalAssist = 0;
+
 								for($i = 0; $i < count($model->gamedetails); $i++){
                                     $getPlayer = $model->gamedetails[$i];
                                     		
@@ -63,13 +67,17 @@ $this->params['breadcrumbs'][] = $this->title;
                                     $ismvplose = $getPlayer->ismvplose ? "checked" : "";
                                     $heroname = $getPlayer->hero != null ? $getPlayer->hero->heroname : "";
 									if($getPlayer->team == "A"){
+                                        $totalKill = $totalKill + $getPlayer->kill;
+                                        $totalDeath = $totalDeath + $getPlayer->death;
+                                        $totalAssist = $totalAssist + $getPlayer->assist;
+
                                         echo '<tr>
                                             <td><a href="'.Yii::$app->request->baseUrl.'/player/view?id='.$getPlayer->playerid.'">'.$getPlayer->player->playerfullname.'</a></td>
                                             <td>'.$heroname.'</td>
-                                            <td>'.$getPlayer->kill.'</td>
-                                            <td>'.$getPlayer->death.'</td>
-                                            <td>'.$getPlayer->assist.'</td>
-                                            <td>'.$getPlayer->rating.'</td>
+                                            <td class="text-right">'.$getPlayer->kill.'</td>
+                                            <td class="text-right">'.$getPlayer->death.'</td>
+                                            <td class="text-right">'.$getPlayer->assist.'</td>
+                                            <td class="text-right">'.$getPlayer->rating.'</td>
                                             <td>'.$getPlayer->medal.'</td>
                                             <td><input class="form-control isvictory" type="checkbox" value="1" name="isvictory"  disabled '.$isvictory.'></td>
                                             <td><input class="form-control ismvpwinning" type="checkbox" value="1" name="ismvpwinning" disabled '.$ismvpwinning.'></td>
@@ -80,9 +88,20 @@ $this->params['breadcrumbs'][] = $this->title;
 							}
 						?>
                     </tbody>
+                    <tfoot>
+                        <?php
+                            echo '<tr>
+                                <td class="text-right" colspan="2"><strong>Total</strong></td>
+                                <td class="text-right"><strong>'.$totalKill.'</strong></td>
+                                <td class="text-right"><strong>'.$totalDeath.'</strong></td>
+                                <td class="text-right"><strong>'.$totalAssist.'</strong></td>
+                                <td colspan="5"></td>
+                                </tr>';                                   
+						?>
+                    </tfoot>
                 </table>          
             </div>
-        <div class="col-md-12">
+        <div class="col-md-6">
                 <h4>Team B</h4>
                 <table class="table table-striped table-bordered">
                     <thead>
@@ -106,6 +125,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?php
 							//print_r($model->gamedetails);
 							if(count($model->gamedetails) > 0){
+                                $totalKill = 0;
+                                $totalDeath = 0;
+                                $totalAssist = 0;
+
 								for($i = 0; $i < count($model->gamedetails); $i++){
 									$getPlayer = $model->gamedetails[$i];
 
@@ -114,13 +137,17 @@ $this->params['breadcrumbs'][] = $this->title;
                                     $ismvplose = $getPlayer->ismvplose ? "checked" : "";
                                     $heroname = $getPlayer->hero != null ? $getPlayer->hero->heroname : "";
 									if($getPlayer->team == "B"){
+                                        $totalKill = $totalKill + $getPlayer->kill;
+                                        $totalDeath = $totalDeath + $getPlayer->death;
+                                        $totalAssist = $totalAssist + $getPlayer->assist;
+
                                             echo '<tr>
                                             <td><a href="'.Yii::$app->request->baseUrl.'/player/view?id='.$getPlayer->playerid.'">'.$getPlayer->player->playerfullname.'</a></td>
                                             <td>'.$heroname.'</td>
-                                            <td>'.$getPlayer->kill.'</td>
-                                            <td>'.$getPlayer->death.'</td>
-                                            <td>'.$getPlayer->assist.'</td>
-                                            <td>'.$getPlayer->rating.'</td>
+                                            <td class="text-right">'.$getPlayer->kill.'</td>
+                                            <td class="text-right">'.$getPlayer->death.'</td>
+                                            <td class="text-right">'.$getPlayer->assist.'</td>
+                                            <td class="text-right">'.$getPlayer->rating.'</td>
                                             <td>'.$getPlayer->medal.'</td>
                                             <td><input class="form-control isvictory" type="checkbox" value="1" name="isvictory" disabled '.$isvictory.'></td>
                                             <td><input class="form-control ismvpwinning" type="checkbox" value="1" name="ismvpwinning" disabled '.$ismvpwinning.'></td>
@@ -131,6 +158,17 @@ $this->params['breadcrumbs'][] = $this->title;
 							}
 						?>
                     </tbody>
+                    <tfoot>
+                        <?php
+                            echo '<tr>
+                                <td class="text-right" colspan="2"><strong>Total</strong></td>
+                                <td class="text-right"><strong>'.$totalKill.'</strong></td>
+                                <td class="text-right"><strong>'.$totalDeath.'</strong></td>
+                                <td class="text-right"><strong>'.$totalAssist.'</strong></td>
+                                <td colspan="5"></td>
+                                </tr>';                                   
+						?>
+                    </tfoot>
                 </table>
             </div>
         </div>

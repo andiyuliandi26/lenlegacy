@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
                     <div id="'.$values->gamename.'" class="panel-collapse collapse" role="tabpanel" aria-labelledby="'.$values->id.'">
                     <div class="panel-body">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <h5>Team A</h5>
                             <table class="table table-striped table-bordered">
                                 <thead>
@@ -87,7 +87,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 echo '</tbody>
                             </table>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <h5>Team B</h5>
                             <table class="table table-striped table-bordered">
                                 <thead>

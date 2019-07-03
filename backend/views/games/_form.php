@@ -314,7 +314,7 @@ $heroauto = Hero::find()->select(['heroname as value', 'heroname as label','id a
     <div class="panel panel-default">
         <div class="panel-heading">Player Detail</div>
         <div class="panel-body">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <h4>Team A</h4>
                 <?php 
                     $gamedetails = GameDetails::find();
@@ -423,7 +423,7 @@ $heroauto = Hero::find()->select(['heroname as value', 'heroname as label','id a
                     </tbody>
                 </table>          
             </div>
-        <div class="col-md-12">
+        <div class="col-md-6">
                 <h4>Team B</h4>
                 <?php 
                     $gamedetails = GameDetails::find();

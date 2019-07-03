@@ -70,7 +70,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     </table>
                 </div>
                 <div class=col-md-9>
-                
+                <style>
+                            .crop-images {
+                                object-fit: cover;
+                                object-position: 0% 0;
+
+                                width: 60px;
+                                height: 60px;
+                                border-radius:50%;
+                            }
+                </style>
                 <table class="table table-striped table-bordered">
                     <thead>
                         <tr>
@@ -90,20 +99,20 @@ $this->params['breadcrumbs'][] = $this->title;
                             
                             foreach($games as $value){
                                 if($no == 1){
-                                    $banned = 'style="background-color:red;color:white;"';
+                                    $banned = 'danger';
                                 }else{
                                     $banned = "";
                                 }
                                 $heroname = $value->heroid != null ? $value->hero->heroname : "";
-                                echo '<tr '.$banned.'>
-                                    <td style="text-align:center;">'.$heroname.'</td>
-                                    <td style="text-align:center;">'.$value->herodamage.'</td>
-                                    <td style="text-align:center;">'.$value->kill.'</td>
-                                    <td style="text-align:center;">'.$value->death.'</td>
-                                    <td style="text-align:center;">'.$value->assist.'</td>
-                                    <td style="text-align:center;">'.$value->rating.'</td>
-                                    <td style="text-align:center;">'.$value->isvictory.'</td>                                  
-                                    <td style="text-align:center;">'.$value->ismvplose.'</td>
+                                echo '<tr class="'.$banned.'">
+                                    <td style="text-align:center;vertical-align:middle;">'.Html::img($value->hero->images, ['class'=>'crop-images']).'<br>'.$heroname.'</td>
+                                    <td style="text-align:center;vertical-align:middle;">'.$value->herodamage.'</td>
+                                    <td style="text-align:center;vertical-align:middle;">'.$value->kill.'</td>
+                                    <td style="text-align:center;vertical-align:middle;">'.$value->death.'</td>
+                                    <td style="text-align:center;vertical-align:middle;">'.$value->assist.'</td>
+                                    <td style="text-align:center;vertical-align:middle;">'.$value->rating.'</td>
+                                    <td style="text-align:center;vertical-align:middle;">'.$value->isvictory.'</td>                                  
+                                    <td style="text-align:center;vertical-align:middle;">'.$value->ismvplose.'</td>
                                 </tr>';
         
                                 $no++;                                
@@ -158,7 +167,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     echo '<tr>
                                         <td style="text-align:center;">'.$no.'</td>
                                         <td style="text-align:center;">'.$value->game->season->seasonname.'</td>
-                                        <td><a href="'.Yii::$app->request->baseUrl.'/games/view?id='.$value->game->id.'">'.$value->game->gamename.'</a></td>
+                                        <td style="text-align:center;"><a href="'.Yii::$app->request->baseUrl.'/games/view?id='.$value->game->id.'">'.$value->game->gamename.'</a></td>
                                         <td style="text-align:center;">'.$value->game->gamedate.'</td>
                                         <td style="text-align:center;">'.$value->game->status.'</td>
                                         <td style="text-align:center;">'.$heroname.'</td>

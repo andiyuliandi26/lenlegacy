@@ -7,6 +7,25 @@ use Yii;
 
 class Standing
 {
+    public $player;
+    public $play;
+    public $win;
+    public $lose;
+    public $kill;
+    public $death;
+    public $assist;
+    public $mvpwinning;
+    public $mvpwinningscore;
+    public $mvplose;
+    public $avgkill;
+    public $avgassist;
+    public $avgdeath;
+    public $avgrating;
+    public $rating;
+    public $totalrating;
+    public $additionalscore;
+    public $winrate;
+
     public static function getDataStanding($sort = "")
     {
         $query = new Query();
@@ -48,24 +67,40 @@ class Standing
         return $data;
     }
 
-    public static function getDataReward($sort = ""){
+    public static function getDataReward($sort = "", $getReward){
+        $dataMax = GameDetails::find()
+                    ->select('
+                        sum(gamedetails.kill) as kills,
+                        sum(gamedetails.assist) as assist,
+                        sum(gamedetails.death) as death,
+                        ')
+                    ->joinWith(['game'])
+                    ->where('games.status = "Done" and !isadditional')
+                    ->groupBy(['playerid'])
+                    ->orderBy($sort)
+                    //->limit(1)
+                    ->max($getReward);
+
+        //$getReward = $getReward == "kills" ? "kill" : $getReward;
         $data = GameDetails::find()
                     ->select('*, 
-                        sum(gamedetails.kill) as kill,
+                        sum(gamedetails.kill) as kills,
                         avg(gamedetails.kill) as avgkill,
                         sum(gamedetails.assist) as assist,
                         avg(gamedetails.assist) as avgassist,
                         sum(gamedetails.death) as death,
                         avg(gamedetails.death) as avgdeath
                         ')
-                    ->joinWith(['game'])
+                    ->joinWith(['game', 'player'], true, 'LEFT JOIN')
                     ->where('games.status = "Done" and !isadditional')
                     ->groupBy(['playerid'])
+                    ->having($getReward.' = '.$dataMax)
                     ->orderBy($sort)
-                    ->limit(1)
+                    //->limit(1)
+                    //->max('gamedetails.death')
                     ->all();
         
-        return $data[0]; 
+        return $data; 
     }
 
     public static function getDataStatistic($sort = ""){
@@ -81,18 +116,33 @@ class Standing
                         avg(gamedetails.rating) as avgrating,
                         sum(gamedetails.isvictory) as isvictory,
                         sum(gamedetails.ismvpwinning) as ismvpwinning,
-                        sum(gamedetails.ismvplose) as ismvolose,
+                        sum(gamedetails.ismvplose) as ismvplose,
                         count(gamedetails.playerid) as play,
                         (count(gamedetails.playerid) - sum(gamedetails.isvictory)) as lose,
                         (sum(gamedetails.isvictory)/count(gamedetails.playerid) * 100) as winrate
                         ')
                     ->joinWith(['game', 'player'], true, 'LEFT JOIN')
-                    ->where('!isadditional')
+                    ->where('games.status = "Done" and !isadditional')
                     ->groupBy(['playerid'])
                     ->orderBy($sort)
                     //->limit(1)
                     ->all();
         
         return $data; 
+    }
+
+    public static function getDataAdditional($playerid){
+        $data = GameDetails::find()
+                    ->select('*, 
+                        sum(gamedetails.isadditional) as isadditional
+                        ')
+                    ->joinWith(['game', 'player'], true, 'LEFT JOIN')
+                    ->where('games.status = "Done" and isadditional and playerid = '.$playerid)
+                    ->groupBy(['playerid'])
+                    //->orderBy($sort)
+                    ->limit(1)
+                    ->all();
+        //var_dump($data);
+        return count($data) > 0 ? $data[0]->isadditional : 0; 
     }
 }

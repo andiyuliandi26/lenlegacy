@@ -10,6 +10,16 @@ use yii\widgets\Pjax;
 $this->title = 'Heroes';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<style>
+    .crop-images {
+        object-fit: cover;
+        object-position: 0% 0;
+        
+        width: 60px;
+        height: 60px;
+        border-radius:50%;
+    }
+</style>
 <div class="hero-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -46,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Hero Image',    
                 'value' => function ($data) {    
                     return Html::img($data['images'],    
-                        ['width' => '120px']);    
+                        ['class' => 'crop-images']);    
                 },    
             ],
             'heroname',

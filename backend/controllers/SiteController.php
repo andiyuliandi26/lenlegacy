@@ -58,6 +58,9 @@ class SiteController extends Controller
         ];
     }
 
+    private function comparator($object1, $object2) { 
+        return $object1->totalrating < $object2->totalrating; 
+    }
     /**
      * Displays homepage.
      *
@@ -67,20 +70,54 @@ class SiteController extends Controller
     {
         $data = Standing::getDataStanding('totalscore DESC, kill DESC, assist DESC, name');
         $stats = Standing::getDataStanding('totalrating DESC, kill DESC, assist DESC, name');
-        $mostkill = Standing::getDataReward('kill DESC');
-        $mostassist = Standing::getDataReward('assist DESC');
-        $mostdeath = Standing::getDataReward('death DESC');
-        $statistic = Standing::getDataStatistic('rating DESC, kill DESC, assist DESC');
+        $mostkill = Standing::getDataReward('kills DESC', 'kills');
+        $mostassist = Standing::getDataReward('assist DESC', 'assist');
+        $mostdeath = Standing::getDataReward('death DESC', 'death');
+        $statistic = Standing::getDataStatistic('name, rating DESC, kill DESC, assist DESC');
         
+        $standingList = [];
+        foreach($statistic as $value){
+
+             $standing = new Standing();
+             $standing->player = $value->player;
+             $standing->play = $value->play;
+             $standing->win = $value->isvictory;
+             $standing->lose = $value->lose;
+             $standing->kill = $value->kill;
+             $standing->death = $value->death;
+             $standing->assist = $value->assist;
+             $standing->mvpwinning = $value->ismvpwinning;
+             $standing->mvpwinningscore = $value->ismvpwinning * 1.5;
+             $standing->mvplose = $value->ismvplose;
+             $standing->avgkill = $value->avgkill;
+             $standing->avgassist = $value->avgassist;
+             $standing->avgdeath = $value->avgdeath;
+             $standing->avgrating = $value->avgrating;
+             $standing->rating = $value->rating;             
+             $standing->additionalscore = Standing::getDataAdditional($value->player->id);
+             $standing->totalrating = $value->rating + $standing->mvpwinningscore + $standing->mvplose + $standing->additionalscore;
+             $standing->winrate = round($value->winrate,2);
+
+             array_push($standingList, $standing);
+        }
+
+        usort($standingList,function($object1, $object2) { 
+            return $object1->totalrating < $object2->totalrating; 
+        });
+
+        //var_dump($standingList);
         return $this->render('index',[
             'model' => $data,
             'stats' => $stats,
             'statistic' => $statistic,
             'mostkill' => $mostkill,
             'mostassist' => $mostassist,
-            'mostdeath' => $mostdeath
+            'mostdeath' => $mostdeath,
+            'standing' => (object) $standingList,
 		]);
     }
+
+    
 
     /**
      * Login action.
