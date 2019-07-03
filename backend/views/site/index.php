@@ -38,15 +38,17 @@ $this->title = 'Len Legacy';
 								<th style="width:2%;text-align:center;vertical-align:middle;" rowspan="2">Lose</th>								
 								<th style="width:2%;text-align:center;vertical-align:middle;" rowspan="2">Win Rate</th>							
 								<th style="width:2%;text-align:center;vertical-align:middle;" rowspan="2">MVP Winning</th>
-								<th style="width:2%;text-align:center;vertical-align:middle;" rowspan="2">MVP Lose</th>                             
-								<th style="width:4%;text-align:center;vertical-align:middle;" colspan="5">Score</th>
+								<th style="width:2%;text-align:center;vertical-align:middle;" rowspan="2">MVP Lose</th> 
+								<th style="width:2%;text-align:center;vertical-align:middle;" rowspan="2">Kill</th>
+								<th style="width:2%;text-align:center;vertical-align:middle;" rowspan="2">Assist</th>                           
+								<th style="width:3%;text-align:center;vertical-align:middle;" colspan="5">Score</th>
 							</tr>
 							<tr>
-								<th style="width:4%;text-align:center;vertical-align:middle;">Game</th>
-								<th style="width:4%;text-align:center;vertical-align:middle;">MVP Win</th>
-								<th style="width:4%;text-align:center;vertical-align:middle;">MVP Lose</th>
-								<th style="width:4%;text-align:center;vertical-align:middle;">Additional Player</th>
-								<th style="width:4%;text-align:center;vertical-align:middle;">Total</th>				
+								<th style="width:3%;text-align:center;vertical-align:middle;">Game</th>
+								<th style="width:3%;text-align:center;vertical-align:middle;">MVP Win</th>
+								<th style="width:3%;text-align:center;vertical-align:middle;">MVP Lose</th>
+								<th style="width:3%;text-align:center;vertical-align:middle;">Additional Player</th>
+								<th style="width:3%;text-align:center;vertical-align:middle;">Total</th>				
 							</tr>
 						</thead>
 						<tbody>
@@ -65,7 +67,7 @@ $this->title = 'Len Legacy';
 									}
 
 									if($no == 10 || $no == 20 || $no == 30){
-										$extraRow = '<tr class="active"><td colspan="13"></td></tr>';
+										$extraRow = '<tr class="active"><td colspan="15"></td></tr>';
 									}
 
 									echo '<tr class="'.$classRow.'">
@@ -77,6 +79,8 @@ $this->title = 'Len Legacy';
 										<td style="text-align:center;">'.$value->winrate.'%</td>
 										<td style="text-align:center;">'.$value->mvpwinning.'</td>
 										<td style="text-align:center;">'.$value->mvplose.'</td>
+										<td style="text-align:center;">'.$value->kill.'</td>
+										<td style="text-align:center;">'.$value->assist.'</td>
 										<td style="text-align:center; color:green;font-weight:bold;">'.$value->rating.'</td>
 										<td style="text-align:center;">'.$value->mvpwinningscore.'</td>
 										<td style="text-align:center;">'.$value->mvplose.'</td>

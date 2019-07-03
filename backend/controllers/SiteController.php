@@ -61,6 +61,22 @@ class SiteController extends Controller
     private function comparator($object1, $object2) { 
         return $object1->totalrating < $object2->totalrating; 
     }
+
+    public function make_cmp(array $sortValues)
+    {
+        return function ($a, $b) use (&$sortValues) {
+            foreach ($sortValues as $column => $sortDir) {
+                $diff = strcmp($a->$column, $b->$column);
+                if ($diff !== 0) {
+                    if ('asc' === $sortDir) {
+                        return $diff;
+                    }
+                    return $diff * -1;
+                }
+            }
+            return 0;
+        };
+    }
     /**
      * Displays homepage.
      *
@@ -101,9 +117,28 @@ class SiteController extends Controller
              array_push($standingList, $standing);
         }
 
-        usort($standingList,function($object1, $object2) { 
-            return $object1->totalrating < $object2->totalrating; 
-        });
+        $sort = array();
+        foreach($standingList as $k=>$v) {
+            $sort['totalrating'][$k] = $v->totalrating;
+            $sort['kill'][$k] = $v->kill;
+            $sort['assist'][$k] = $v->assist;
+        }
+
+        array_multisort(
+                $sort['totalrating'], SORT_DESC,
+                $sort['kill'],SORT_DESC,
+                $sort['assist'],SORT_DESC,
+                $standingList);
+
+         //usort($standingList,$this->make_cmp(['totalrating'=>'desc', 'kill'=>'desc']));
+
+        // usort($standingList,function($object1, $object2) { 
+        //     return $object1->totalrating < $object2->totalrating; 
+        // });
+
+        // usort($standingList,function($object1, $object2) { 
+        //     return $object1->kill < $object2->kill; 
+        // });
 
         //var_dump($standingList);
         return $this->render('index',[
