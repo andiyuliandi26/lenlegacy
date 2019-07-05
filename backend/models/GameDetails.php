@@ -34,6 +34,7 @@ use Yii;
  */
 class GameDetails extends \yii\db\ActiveRecord
 {
+    public $kills;
     public $avgkill;
     public $avgassist;
     public $avgdeath;

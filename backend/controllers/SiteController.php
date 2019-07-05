@@ -87,6 +87,7 @@ class SiteController extends Controller
         $data = Standing::getDataStanding('totalscore DESC, kill DESC, assist DESC, name');
         $stats = Standing::getDataStanding('totalrating DESC, kill DESC, assist DESC, name');
         $mostkill = Standing::getDataReward('kills DESC', 'kills');
+        
         $mostassist = Standing::getDataReward('assist DESC', 'assist');
         $mostdeath = Standing::getDataReward('death DESC', 'death');
         $statistic = Standing::getDataStatistic('name, rating DESC, kill DESC, assist DESC');

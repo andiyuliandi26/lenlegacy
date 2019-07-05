@@ -80,10 +80,10 @@ class Standing
                     ->orderBy($sort)
                     //->limit(1)
                     ->max($getReward);
-
+        
         //$getReward = $getReward == "kills" ? "kill" : $getReward;
         $data = GameDetails::find()
-                    ->select('*, 
+                    ->select('playerid, heroid, team, 
                         sum(gamedetails.kill) as kills,
                         avg(gamedetails.kill) as avgkill,
                         sum(gamedetails.assist) as assist,
@@ -94,12 +94,12 @@ class Standing
                     ->joinWith(['game', 'player'], true, 'LEFT JOIN')
                     ->where('games.status = "Done" and !isadditional')
                     ->groupBy(['playerid'])
-                    ->having($getReward.' = '.$dataMax)
+                    //->having($getReward.' = '.$dataMax)
                     ->orderBy($sort)
-                    //->limit(1)
+                    ->limit(3)
                     //->max('gamedetails.death')
                     ->all();
-        
+                    //var_dump($data);
         return $data; 
     }
 

@@ -175,8 +175,9 @@ $this->title = 'Len Legacy';
 						<div class="panel-heading">Killing Machine Player</div>
 							<div class="panel-body">
 							<?php
-								foreach($mostkill as $mostkill){ ?>
-
+								foreach($mostkill as $mostkill){ 
+									
+								?>
 								
 								<table id="w0" class="table table-striped table-bordered detail-view">
 									<tbody>
@@ -186,7 +187,7 @@ $this->title = 'Len Legacy';
 										</tr>
 										<tr>
 											<th style="width:40%">Total Kill</th>
-											<td><?= $mostkill->kill ?></td>
+											<td><?= $mostkill->kills ?></td>
 										</tr>
 										<tr>
 											<th style="width:40%">Average Kill/match</th>
@@ -194,10 +195,11 @@ $this->title = 'Len Legacy';
 										</tr>
 									</tbody>
 								</table>
+								<?php
+									}
+								?>
 							</div>
-						<?php
-							}
-						?>
+						
 					</div>
 				</div>
 
