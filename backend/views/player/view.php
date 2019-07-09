@@ -71,14 +71,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <div class=col-md-9>
                 <style>
-                            .crop-images {
-                                object-fit: cover;
-                                object-position: 0% 0;
-
-                                width: 60px;
-                                height: 60px;
-                                border-radius:50%;
-                            }
+                    .crop-images {
+                        object-fit: cover;
+                        object-position: 0% 0;
+                        
+                        width: 60px;
+                        height: 60px;
+                        border-radius:50%;
+                    }
                 </style>
                 <table class="table table-striped table-bordered">
                     <thead>
@@ -104,8 +104,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                     $banned = "";
                                 }
                                 $heroname = $value->heroid != null ? $value->hero->heroname : "";
+                                $heroimages = $value->heroid != null ? $value->hero->images : "";
                                 echo '<tr class="'.$banned.'">
-                                    <td style="text-align:center;vertical-align:middle;">'.Html::img($value->hero->images, ['class'=>'crop-images']).'<br>'.$heroname.'</td>
+                                    <td style="text-align:center;vertical-align:middle;">'.Html::img($heroimages, ['class'=>'crop-images']).'<br>'.$heroname.'</td>
                                     <td style="text-align:center;vertical-align:middle;">'.$value->herodamage.'</td>
                                     <td style="text-align:center;vertical-align:middle;">'.$value->kill.'</td>
                                     <td style="text-align:center;vertical-align:middle;">'.$value->death.'</td>
@@ -140,7 +141,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Death</th>
                             <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Assist</th>                              
                             <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Rating</th> 
-                            <!-- <th style="width:4%;text-align:center;vertical-align:middle;" colspan="6">Total Damage</th>                             -->
+                            <!-- <th style="width:4%;text-align:center;vertical-align:middle;" colspan="6">Total Damage</th> -->
                             <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Medal</th>
                             <th style="width:2%;text-align:center;vertical-align:middle;" rowspan="2">Victory</th>
                             <th style="width:2%;text-align:center;vertical-align:middle;" colspan="2">MVP</th>
