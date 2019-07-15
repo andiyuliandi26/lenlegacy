@@ -10,7 +10,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Games', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="games-create">
-    <?= $this->render('_form', [
+    <?= $this->render('_form-create', [
         'model' => $model,
         'models' => $models
     ]) ?>

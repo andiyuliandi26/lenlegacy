@@ -170,13 +170,12 @@ $this->title = 'Len Legacy';
 			</div>
 
 			<div class="tab-pane fade" id="reward-5"  style="background-color:#F5F5F5;">
-				<div class="col-md-4" style="padding:20px 20px 10px 10px;">
+				<div class="col-md-3" style="padding:20px 20px 10px 10px;">
 					<div class="panel panel-primary">
 						<div class="panel-heading">Killing Machine Player</div>
 							<div class="panel-body">
 							<?php
-								foreach($mostkill as $mostkill){ 
-									
+								foreach($mostkill as $mostkill){ 									
 								?>
 								
 								<table id="w0" class="table table-striped table-bordered detail-view">
@@ -190,7 +189,7 @@ $this->title = 'Len Legacy';
 											<td><?= $mostkill->kills ?></td>
 										</tr>
 										<tr>
-											<th style="width:40%">Average Kill/match</th>
+											<th style="width:40%">Average</th>
 											<td><?= round($mostkill->avgkill,1) ?></td>
 										</tr>
 									</tbody>
@@ -203,7 +202,7 @@ $this->title = 'Len Legacy';
 					</div>
 				</div>
 
-				<div class="col-md-4" style="padding:20px 20px 10px 10px;">
+				<div class="col-md-3" style="padding:20px 20px 10px 10px;">
 					<div class="panel panel-success">
 						<div class="panel-heading">Expert Wingman Player</div>
 							<div class="panel-body">
@@ -220,7 +219,7 @@ $this->title = 'Len Legacy';
 											<td><?= $mostassist->assist ?></td>
 										</tr>
 										<tr>
-											<th style="width:40%">Average Assist/match</th>
+											<th style="width:40%">Average</th>
 											<td><?= round($mostassist->avgassist,1) ?></td>
 										</tr>
 									</tbody>
@@ -231,7 +230,7 @@ $this->title = 'Len Legacy';
 					</div>
 				</div>
 
-				<div class="col-md-4" style="padding:20px 20px 10px 10px;">
+				<div class="col-md-3" style="padding:20px 20px 10px 10px;">
 					<div class="panel panel-danger">
 						<div class="panel-heading">Most Death Player</div>
 							<div class="panel-body">
@@ -248,8 +247,36 @@ $this->title = 'Len Legacy';
 											<td><?= $mostdeath->death ?></td>
 										</tr>
 										<tr>
-											<th style="width:40%">Average Death/match</th>
+											<th style="width:40%">Average</th>
 											<td><?= round($mostdeath->avgdeath,1) ?></td>
+										</tr>
+									</tbody>
+								</table><?php
+							}
+						?>
+							</div>
+					</div>
+				</div>
+
+				<div class="col-md-3" style="padding:20px 20px 10px 10px;">
+					<div class="panel panel-warning">
+						<div class="panel-heading">Survival Player</div>
+							<div class="panel-body">
+							<?php
+								foreach($survival as $survival){ ?>
+								<table id="w0" class="table table-striped table-bordered detail-view">
+									<tbody>
+										<tr>
+											<th style="width:40%">Name</th>
+											<td><?= $survival->player->name.' ('.$survival->player->nickname.')' ?></td>
+										</tr>
+										<tr>
+											<th style="width:40%">Total Death</th>
+											<td><?= $survival->death ?></td>
+										</tr>
+										<tr>
+											<th style="width:40%">Average</th>
+											<td><?= round($survival->avgdeath,1) ?></td>
 										</tr>
 									</tbody>
 								</table><?php

@@ -111,7 +111,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <td style="text-align:center;vertical-align:middle;">'.$value->kill.'</td>
                                     <td style="text-align:center;vertical-align:middle;">'.$value->death.'</td>
                                     <td style="text-align:center;vertical-align:middle;">'.$value->assist.'</td>
-                                    <td style="text-align:center;vertical-align:middle;">'.$value->rating.'</td>
+                                    <td style="text-align:center;vertical-align:middle;">'.round($value->rating, 2).'</td>
                                     <td style="text-align:center;vertical-align:middle;">'.$value->isvictory.'</td>                                  
                                     <td style="text-align:center;vertical-align:middle;">'.$value->ismvplose.'</td>
                                 </tr>';
@@ -141,6 +141,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Death</th>
                             <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Assist</th>                              
                             <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Rating</th> 
+                            <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Is Additional</th>
                             <!-- <th style="width:4%;text-align:center;vertical-align:middle;" colspan="6">Total Damage</th> -->
                             <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Medal</th>
                             <th style="width:2%;text-align:center;vertical-align:middle;" rowspan="2">Victory</th>
@@ -164,7 +165,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                 $isvictory = $value->isvictory ? "checked" : "";
 								$ismvpwinning = $value->ismvpwinning ? "checked" : "";
                                 $ismvplose = $value->ismvplose ? "checked" : "";
+                                $isadditional = $value->isadditional ? "checked" : "";
                                 $heroname = $value->heroid != null ? $value->hero->heroname : "";
+                                if(!$value->isadditional){
                                     echo '<tr>
                                         <td style="text-align:center;">'.$no.'</td>
                                         <td style="text-align:center;">'.$value->game->season->seasonname.'</td>
@@ -176,13 +179,16 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <td style="text-align:center;">'.$value->death.'</td>
                                         <td style="text-align:center;">'.$value->assist.'</td>
                                         <td style="text-align:center;">'.$value->rating.'</td>
+                                        <td style="text-align:center;"><input class="form-control" type="checkbox" value="1" name="isadditional" disabled '.$isadditional.'></td>
                                         <td style="text-align:center;">'.$value->medal.'</td>                                    
                                         <td style="text-align:center;"><input class="form-control" type="checkbox" value="1" name="isvictory" disabled '.$isvictory.'></td>
                                         <td style="text-align:center;"><input class="form-control" type="checkbox" value="1" name="isvictory" disabled '.$ismvpwinning.'></td>
                                         <td style="text-align:center;"><input class="form-control" type="checkbox" value="1" name="isvictory" disabled '.$ismvplose.'></td>
                                     </tr>';
             
-                                    $no++;                                
+                                    $no++;     
+                                }
+                                                               
                             }
                         ?>
                     </tbody>

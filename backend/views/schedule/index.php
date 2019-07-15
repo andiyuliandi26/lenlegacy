@@ -44,42 +44,28 @@ $this->params['breadcrumbs'][] = $this->title;
                         
                     </h4>
                     </div>
-                    <div id="'.$values->gamename.'" class="panel-collapse collapse" role="tabpanel" aria-labelledby="'.$values->id.'">
+                    <div id="'.$values->gamename.'" class="panel-collapse expand" role="tabpanel" aria-labelledby="'.$values->id.'">
                     <div class="panel-body">
                         <div class="col-md-6">
                             <h5>Team A</h5>
                             <table class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
-                                        <th style="width:10%;text-align:center;vertical-align:middle;" rowspan="2">Player</th>
-                                        <th style="width:10%;text-align:center;vertical-align:middle;" rowspan="2">Hero</th>
-                                        <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Kill</th>
-                                        <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Death</th>
-                                        <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Assist</th>                              
-                                        <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Rating</th>
-                                        <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Medal</th>
-                                        <th style="width:2%;text-align:center;vertical-align:middle;" rowspan="2">Victory</th>
-                                        <th style="width:2%;text-align:center;vertical-align:middle;" colspan="2">MVP</th>
-                                    </tr>
-                                    <tr>
-                                        <th style="width:2%;text-align:center;vertical-align:middle;">Winning</th>
-                                        <th style="width:2%;text-align:center;vertical-align:middle;">Lose</th>
-                                    </tr>
+                                        <th style="width:20%;text-align:center;vertical-align:middle;">Player</th>
+                                        <th style="width:4%;text-align:center;vertical-align:middle;">Kill</th>
+                                        <th style="width:4%;text-align:center;vertical-align:middle;">Death</th>
+                                        <th style="width:4%;text-align:center;vertical-align:middle;">Assist</th>                              
+                                        <th style="width:4%;text-align:center;vertical-align:middle;">Rating</th></tr>
                                 </thead>
                                 <tbody>';
                                     foreach($values->gamedetails as $player){
                                         if($player->team == "A"){
                                             echo '<tr>
-                                            <td>'.$player->player->playerfullname.'</td>
-                                            <td></td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td></td>
-                                            <td><input class="form-control isvictory" type="checkbox" value="1" name="isvictory" disabled></td>
-                                            <td><input class="form-control ismvpwinning" type="checkbox" value="1" name="ismvpwinning" disabled></td>
-                                            <td><input class="form-control ismvplose" type="checkbox" value="1" name="ismvplose" disabled></td>
+                                            <td><a href="'.Yii::$app->request->baseUrl.'/player/view?id='.$player->player->id.'">'.$player->player->name.' ('.$player->player->nickname.')</a></td>
+                                            <td style="text-align:right;">0</td>
+                                            <td style="text-align:right;">0</td>
+                                            <td style="text-align:right;">0</td>
+                                            <td style="text-align:right;">0</td>
                                         </tr>';
                                         }
                                     }
@@ -92,35 +78,22 @@ $this->params['breadcrumbs'][] = $this->title;
                             <table class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
-                                        <th style="width:10%;text-align:center;vertical-align:middle;" rowspan="2">Player</th>
-                                        <th style="width:10%;text-align:center;vertical-align:middle;" rowspan="2">Hero</th>
-                                        <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Kills</th>
-                                        <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Deaths</th>
-                                        <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Assists</th>                              
-                                        <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Rating</th> 
-                                        <th style="width:4%;text-align:center;vertical-align:middle;" rowspan="2">Medal</th>
-                                        <th style="width:2%;text-align:center;vertical-align:middle;" rowspan="2">Victory</th>
-                                        <th style="width:2%;text-align:center;vertical-align:middle;" colspan="2">MVP</th>
-                                    </tr>
-                                    <tr>
-                                        <th style="width:2%;text-align:center;vertical-align:middle;">Winning</th>
-                                        <th style="width:2%;text-align:center;vertical-align:middle;">Lose</th>
+                                        <th style="width:20%;text-align:center;vertical-align:middle;">Player</th>
+                                        <th style="width:4%;text-align:center;vertical-align:middle;">Kills</th>
+                                        <th style="width:4%;text-align:center;vertical-align:middle;">Deaths</th>
+                                        <th style="width:4%;text-align:center;vertical-align:middle;">Assists</th>                              
+                                        <th style="width:4%;text-align:center;vertical-align:middle;">Rating</th>
                                     </tr>
                                 </thead>
                                 <tbody>';
                                 foreach($values->gamedetails as $player){
                                     if($player->team == "B"){
                                         echo '<tr>
-                                        <td>'.$player->player->playerfullname.'</td>
-                                        <td></td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td></td>
-                                        <td><input class="form-control isvictory" type="checkbox" value="1" name="isvictory" disabled></td>
-                                        <td><input class="form-control ismvpwinning" type="checkbox" value="1" name="ismvpwinning" disabled></td>
-                                        <td><input class="form-control ismvplose" type="checkbox" value="1" name="ismvplose" disabled></td>
+                                        <td><a href="'.Yii::$app->request->baseUrl.'/player/view?id='.$player->player->id.'">'.$player->player->name.' ('.$player->player->nickname.')</a></td>
+                                        <td style="text-align:right;">0</td>
+                                        <td style="text-align:right;">0</td>
+                                        <td style="text-align:right;">0</td>
+                                        <td style="text-align:right;">0</td>
                                     </tr>';
                                     }
                                 }

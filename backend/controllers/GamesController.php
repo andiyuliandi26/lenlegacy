@@ -204,12 +204,6 @@ class GamesController extends Controller
             }else{
                 $result = $games->getErrors();
             }
-			    
-			    
-				
-			//}else{
-				//$result = "false";
-			//}
 			
 			Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 			return [

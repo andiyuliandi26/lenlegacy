@@ -90,6 +90,7 @@ class SiteController extends Controller
         
         $mostassist = Standing::getDataReward('assist DESC', 'assist');
         $mostdeath = Standing::getDataReward('death DESC', 'death');
+        $survival = Standing::getDataReward('death ASC', 'death');
         $statistic = Standing::getDataStatistic('name, rating DESC, kill DESC, assist DESC');
         
         $standingList = [];
@@ -149,6 +150,7 @@ class SiteController extends Controller
             'mostkill' => $mostkill,
             'mostassist' => $mostassist,
             'mostdeath' => $mostdeath,
+            'survival' => $survival,
             'standing' => (object) $standingList,
 		]);
     }
