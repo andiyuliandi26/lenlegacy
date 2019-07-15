@@ -6,15 +6,15 @@ $this->title = 'Len Legacy';
 ?>
 <div class="site-index">
 	<div class="col-md-12" style="margin-bottom:15px">
-		<div class="col-md-4 col-xs-4" style="text-align:center;">
+		<div class="col-md-4" style="text-align:center;">
 			<img src="/images/logolegacy.png" width=450 style="border-radius:20px;">
 		</div>
-		<div class="col-md-4 col-xs-4" style="text-align:center;">
+		<div class="col-md-4" style="text-align:center;">
 			<h3>LEGACY Mobile Legends Tournament Standing</h3>
 			<h2>Season 2</h2>
 			<h5>Data updated : <?= date('d-m-Y H:i:s') ?></h5>
 		</div>
-		<div class="col-md-4 col-xs-4" style="text-align:center;">
+		<div class="col-md-4" style="text-align:center;">
 		<img src="/images/logomobilelegends.png" width=450 style="border-radius:20px;">
 		</div>
 	</div>
