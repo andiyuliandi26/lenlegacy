@@ -7,7 +7,7 @@ $this->title = 'Len Legacy';
 <div class="site-index">
 	<div class="col-md-12" style="margin-bottom:15px">
 		<div class="col-md-4" style="text-align:center;">
-			<img src="/images/logolegacy.png" width=450>
+			<img src="/images/logolegacy.png" width=450 style="border-radius:20px;">
 		</div>
 		<div class="col-md-4" style="text-align:center;">
 			<h3>LEGACY Mobile Legends Tournament Standing</h3>
@@ -15,7 +15,7 @@ $this->title = 'Len Legacy';
 			<h5>Data updated : <?= date('d-m-Y H:i:s') ?></h5>
 		</div>
 		<div class="col-md-4" style="text-align:center;">
-		<img src="/images/logomobilelegends.png" width=450>
+		<img src="/images/logomobilelegends.png" width=450 style="border-radius:20px;">
 		</div>
 	</div>
 

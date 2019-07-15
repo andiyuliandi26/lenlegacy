@@ -103,7 +103,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         </div>
                     </div>
                     </div>
-                </div>';  
+                </div>'; 
+                echo '</br><hr>'; 
                 //print_r($value->gamedetails);
             }
         ?>
