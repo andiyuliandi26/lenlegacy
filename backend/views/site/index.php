@@ -23,7 +23,8 @@ $this->title = 'Len Legacy';
 		<ul id="myTab-5" class="nav nav-tabs" role="tablist" >
 			<li class="active"><a href="#home-5" role="tab" data-toggle="tab">Standing</a></li>
 			<li><a href="#profile-5" role="tab-kv" data-toggle="tab">Player Statistic</a></li>
-			<li><a href="#reward-5" role="tab-kv" data-toggle="tab">Reward</a></li>			
+			<li><a href="#reward-5" role="tab-kv" data-toggle="tab">Reward</a></li>	
+			<li><a href="#rules-5" role="tab-kv" data-toggle="tab">Rules</a></li>		
 		</ul>
 		<div id="myTabContent-5" class="tab-content" style="background-color:#F5F5F5;border: 1px solid;">
 			<div class="tab-pane fade in active" id="home-5" style="background-color:#F5F5F5;">
@@ -285,7 +286,39 @@ $this->title = 'Len Legacy';
 							</div>
 					</div>
 				</div>
-			</div>			
+			</div>	
+
+			<div class="tab-pane fade" id="rules-5"  style="background-color:#F5F5F5;">
+				<div class="col-md-4 col-xs-6" style="padding:20px 20px 10px 10px;">
+				<div class="panel panel-primary">
+						<div class="panel-heading">Basic Rule</div>
+							<div class="panel-body">
+							<h5><strong>Berikut penyesuaian peraturan:</strong></h5>
+<p>1. Jadwal main hari Senin &amp; Kamis adalah tier 1 dan tier 3<br />Jadwal main hari Selasa &amp; Jumat adalah tier 2 &amp; 4</p>
+<p>2. Pemain yang berhalangan untuk bertanding harap memberitahukan 2 &nbsp;jam sebelum pertandingan untuk dapat mencari pengganti. (Konfirmasi dilakukan di grup WA, tidak personal)</p>
+<p><strong>Mencari pengganti adalah tanggung jawab pemain yg berhalangan<br /></strong>Aturan pemain pengganti:</p>
+<p>Tier 1 hanya boleh di ganti oleh tier 2 dan sebaliknya.<br />Tier 3 hanya boleh diganti oleh tier 4 dan sebaliknya.</p>
+<p>Notes : Untuk menghindari jomplangnya skill pemain</p>
+<p>3. Aturan Wasit :<br />Setiap hari rabu dan sabtu akan ditentukan wasit untuk setiap pertandingan. (1 pertandingan 2 wasit)</p>
+<p><strong>Fungsi wasit :</strong><br />1. Membuat custom room (pemain dilarang membuat room)<br />2. Melakukan pause game saat ada indikasi pemain AFK</p>
+<p><strong>Aturan Pause game :<br /></strong>1. Rentang waktu pause 1 menit&nbsp;<br />2. Maksimal 2 kali pause dalam satu game.</p>
+<p>Demikian keputusan ini disampaikan, berlaku mulai jadwal pertandingan tanggal 18 Juli 2019 dan seterusnya sampai season berakhir</p>
+
+<p>Bandung, 17 Juli 2019<br />-panitia-</p>
+							</div>
+				</div>
+			</div>
+			<div class="col-md-4 col-xs-6" style="padding:20px 20px 10px 10px;">
+							
+				<div class="panel panel-default">
+						<div class="panel-heading">Standing Rule</div>
+							<div class="panel-body">
+							
+							</div>
+				</div>
+				
+				</div>
+			</div>		
 		</div>
 	</div>
 
@@ -293,3 +326,5 @@ $this->title = 'Len Legacy';
 <?php 
 	//var_dump($model);
 ?>
+
+
