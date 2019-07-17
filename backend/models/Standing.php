@@ -106,7 +106,7 @@ class Standing
     public static function getDataStatistic($sort = ""){
         $data = GameDetails::find()
                     ->select('*, 
-                        sum(gamedetails.kill) as kill,
+                        sum(gamedetails.kill) as kills,
                         avg(gamedetails.kill) as avgkill,
                         sum(gamedetails.assist) as assist,
                         avg(gamedetails.assist) as avgassist,
@@ -127,7 +127,8 @@ class Standing
                     ->orderBy($sort)
                     //->limit(1)
                     ->all();
-        
+                    //echo $data->createCommand();
+                    //echo $data->createCommand()->getRawSql();
         return $data; 
     }
 

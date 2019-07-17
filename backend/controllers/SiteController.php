@@ -84,16 +84,17 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $data = Standing::getDataStanding('totalscore DESC, kill DESC, assist DESC, name');
-        $stats = Standing::getDataStanding('totalrating DESC, kill DESC, assist DESC, name');
+        //$data = Standing::getDataStanding('totalscore DESC, kill DESC, assist DESC, name');
+        //$stats = Standing::getDataStanding('totalrating DESC, kill DESC, assist DESC, name');
         $mostkill = Standing::getDataReward('kills DESC', 'kills');
         
         $mostassist = Standing::getDataReward('assist DESC', 'assist');
         $mostdeath = Standing::getDataReward('death DESC', 'death');
         $survival = Standing::getDataReward('death ASC', 'death');
-        $statistic = Standing::getDataStatistic('name, rating DESC, kill DESC, assist DESC');
+        $statistic = Standing::getDataStatistic('rating DESC, kills DESC, assist DESC, name');
         
-        $standingList = [];
+        //print_r(json_encode($statistic));
+        $standingList = array();
         foreach($statistic as $value){
 
              $standing = new Standing();
@@ -101,7 +102,7 @@ class SiteController extends Controller
              $standing->play = $value->play;
              $standing->win = $value->isvictory;
              $standing->lose = $value->lose;
-             $standing->kill = $value->kill;
+             $standing->kill = $value->kills;
              $standing->death = $value->death;
              $standing->assist = $value->assist;
              $standing->mvpwinning = $value->ismvpwinning;
@@ -111,9 +112,9 @@ class SiteController extends Controller
              $standing->avgassist = $value->avgassist;
              $standing->avgdeath = $value->avgdeath;
              $standing->avgrating = $value->avgrating;
-             $standing->rating = $value->rating;             
+             $standing->rating = round($value->rating,1);             
              $standing->additionalscore = Standing::getDataAdditional($value->player->id);
-             $standing->totalrating = $value->rating + $standing->mvpwinningscore + $standing->mvplose + $standing->additionalscore;
+             $standing->totalrating = round($value->rating,1) + $standing->mvpwinningscore + $standing->mvplose + $standing->additionalscore;
              $standing->winrate = round($value->winrate,2);
 
              array_push($standingList, $standing);
@@ -126,7 +127,7 @@ class SiteController extends Controller
             $sort['assist'][$k] = $v->assist;
         }
 
-        array_multisort(
+        array_multisort(                 
                 $sort['totalrating'], SORT_DESC,
                 $sort['kill'],SORT_DESC,
                 $sort['assist'],SORT_DESC,
@@ -142,10 +143,11 @@ class SiteController extends Controller
         //     return $object1->kill < $object2->kill; 
         // });
 
-        //var_dump($standingList);
+        //var_dump(json_encode($sort));
+        
         return $this->render('index',[
-            'model' => $data,
-            'stats' => $stats,
+            //'model' => $data,
+            //'stats' => $stats,
             'statistic' => $statistic,
             'mostkill' => $mostkill,
             'mostassist' => $mostassist,
