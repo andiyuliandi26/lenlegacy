@@ -89,7 +89,11 @@ class Standing
                         sum(gamedetails.assist) as assist,
                         avg(gamedetails.assist) as avgassist,
                         sum(gamedetails.death) as death,
-                        avg(gamedetails.death) as avgdeath
+                        avg(gamedetails.death) as avgdeath,
+                        sum(gamedetails.rating) as rating,
+                        sum(gamedetails.ismvpwinning) as ismvpwinning,
+                        sum(gamedetails.ismvplose) as ismvplose,
+                        (sum(gamedetails.isvictory)/count(gamedetails.playerid) * 100) as winrate
                         ')
                     ->joinWith(['game', 'player'], true, 'LEFT JOIN')
                     ->where('games.status = "Done" and !isadditional')

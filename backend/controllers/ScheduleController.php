@@ -55,6 +55,7 @@ class ScheduleController extends Controller
     {
         $model = Games::find()
             ->where('status = "Scheduled"')
+            ->orderBy('gamedate')
             ->all();
 
         return $this->render('index', [

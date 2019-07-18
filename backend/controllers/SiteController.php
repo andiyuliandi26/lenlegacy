@@ -86,17 +86,18 @@ class SiteController extends Controller
     {
         //$data = Standing::getDataStanding('totalscore DESC, kill DESC, assist DESC, name');
         //$stats = Standing::getDataStanding('totalrating DESC, kill DESC, assist DESC, name');
-        $mostkill = Standing::getDataReward('kills DESC', 'kills');
+        $mostkill = array();
         
-        $mostassist = Standing::getDataReward('assist DESC', 'assist');
+        $mostassist = array();
         $mostdeath = Standing::getDataReward('death DESC', 'death');
         $survival = Standing::getDataReward('death ASC', 'death');
         $statistic = Standing::getDataStatistic('rating DESC, kills DESC, assist DESC, name');
         
         //print_r(json_encode($statistic));
         $standingList = array();
+        $mostkillList = array();
+        $mostassistList = array();
         foreach($statistic as $value){
-
              $standing = new Standing();
              $standing->player = $value->player;
              $standing->play = $value->play;
@@ -104,7 +105,7 @@ class SiteController extends Controller
              $standing->lose = $value->lose;
              $standing->kill = $value->kills;
              $standing->death = $value->death;
-             $standing->assist = $value->assist;
+             $standing->assist = round($value->assist,1);
              $standing->mvpwinning = $value->ismvpwinning;
              $standing->mvpwinningscore = $value->ismvpwinning * 1.5;
              $standing->mvplose = $value->ismvplose;
@@ -118,6 +119,8 @@ class SiteController extends Controller
              $standing->winrate = round($value->winrate,2);
 
              array_push($standingList, $standing);
+             array_push($mostkillList, $standing);
+             array_push($mostassistList, $standing);
         }
 
         $sort = array();
@@ -125,26 +128,21 @@ class SiteController extends Controller
             $sort['totalrating'][$k] = $v->totalrating;
             $sort['kill'][$k] = $v->kill;
             $sort['assist'][$k] = $v->assist;
+            $sort['winrate'][$k] = $v->winrate;
+        }
+        
+        array_multisort( $sort['totalrating'],SORT_DESC, $sort['kill'],SORT_DESC, $sort['assist'],SORT_DESC, $standingList);
+        array_multisort( $sort['kill'],SORT_DESC, $sort['totalrating'],SORT_DESC, $sort['winrate'],SORT_DESC, $mostkillList);
+        array_multisort( $sort['assist'],SORT_DESC, $sort['totalrating'],SORT_DESC, $sort['winrate'],SORT_DESC, $mostassistList);
+        //print_r($mostassistList);
+        for($i = 0; $i < 3; $i++){
+            array_push($mostkill, $mostkillList[$i]);
         }
 
-        array_multisort(                 
-                $sort['totalrating'], SORT_DESC,
-                $sort['kill'],SORT_DESC,
-                $sort['assist'],SORT_DESC,
-                $standingList);
+        for($i = 0; $i < 40; $i++){
+            array_push($mostassist, $mostassistList[$i]);
+        }
 
-         //usort($standingList,$this->make_cmp(['totalrating'=>'desc', 'kill'=>'desc']));
-
-        // usort($standingList,function($object1, $object2) { 
-        //     return $object1->totalrating < $object2->totalrating; 
-        // });
-
-        // usort($standingList,function($object1, $object2) { 
-        //     return $object1->kill < $object2->kill; 
-        // });
-
-        //var_dump(json_encode($sort));
-        
         return $this->render('index',[
             //'model' => $data,
             //'stats' => $stats,

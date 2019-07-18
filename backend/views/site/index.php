@@ -112,6 +112,7 @@ $this->title = 'Len Legacy';
 					</table>		
 				</div>
 			</div>
+
 			<div class="tab-pane fade" id="profile-5"  style="background-color:#F5F5F5;">
 				<div class="col-lg-12"  style="padding:20px 20px 10px 10px;" >
 					<table class="table table-striped table-bordered">
@@ -187,7 +188,7 @@ $this->title = 'Len Legacy';
 										</tr>
 										<tr>
 											<th style="width:40%">Total Kill</th>
-											<td><?= $mostkill->kills ?></td>
+											<td><?= $mostkill->kill ?></td>
 										</tr>
 										<tr>
 											<th style="width:40%">Average</th>
@@ -290,38 +291,66 @@ $this->title = 'Len Legacy';
 
 			<div class="tab-pane fade" id="rules-5"  style="background-color:#F5F5F5;">
 				<div class="col-md-4 col-xs-6" style="padding:20px 20px 10px 10px;">
-				<div class="panel panel-primary">
+					<div class="panel panel-primary">
 						<div class="panel-heading">Basic Rule</div>
 							<div class="panel-body">
-							<h5><strong>Berikut penyesuaian peraturan:</strong></h5>
-<p>1. Jadwal main hari Senin &amp; Kamis adalah tier 1 dan tier 3<br />Jadwal main hari Selasa &amp; Jumat adalah tier 2 &amp; 4</p>
-<p>2. Pemain yang berhalangan untuk bertanding harap memberitahukan 2 &nbsp;jam sebelum pertandingan untuk dapat mencari pengganti. (Konfirmasi dilakukan di grup WA, tidak personal)</p>
-<p><strong>Mencari pengganti adalah tanggung jawab pemain yg berhalangan<br /></strong>Aturan pemain pengganti:</p>
-<p>Tier 1 hanya boleh di ganti oleh tier 2 dan sebaliknya.<br />Tier 3 hanya boleh diganti oleh tier 4 dan sebaliknya.</p>
-<p>Notes : Untuk menghindari jomplangnya skill pemain</p>
-<p>3. Aturan Wasit :<br />Setiap hari rabu dan sabtu akan ditentukan wasit untuk setiap pertandingan. (1 pertandingan 2 wasit)</p>
-<p><strong>Fungsi wasit :</strong><br />1. Membuat custom room (pemain dilarang membuat room)<br />2. Melakukan pause game saat ada indikasi pemain AFK</p>
-<p><strong>Aturan Pause game :<br /></strong>1. Rentang waktu pause 1 menit&nbsp;<br />2. Maksimal 2 kali pause dalam satu game.</p>
-<p>Demikian keputusan ini disampaikan, berlaku mulai jadwal pertandingan tanggal 18 Juli 2019 dan seterusnya sampai season berakhir</p>
+								<h5><strong>Berikut penyesuaian peraturan:</strong></h5>
+								<p>1. Jadwal main hari Senin &amp; Kamis adalah tier 1 dan tier 3<br />Jadwal main hari Selasa &amp; Jumat adalah tier 2 &amp; 4</p>
+								<p>2. Pemain yang berhalangan untuk bertanding harap memberitahukan 2 &nbsp;jam sebelum pertandingan untuk dapat mencari pengganti. (Konfirmasi dilakukan di grup WA, tidak personal)</p>
+								<p><strong>Mencari pengganti adalah tanggung jawab pemain yg berhalangan<br /></strong>Aturan pemain pengganti:</p>
+								<p>Tier 1 hanya boleh di ganti oleh tier 2 dan sebaliknya.<br />Tier 3 hanya boleh diganti oleh tier 4 dan sebaliknya.</p>
+								<p>Notes : Untuk menghindari jomplangnya skill pemain</p>
+								<p>3. Aturan Wasit :<br />Setiap hari rabu dan sabtu akan ditentukan wasit untuk setiap pertandingan. (1 pertandingan 2 wasit)</p>
+								<p><strong>Fungsi wasit :</strong><br />1. Membuat custom room (pemain dilarang membuat room)<br />2. Melakukan pause game saat ada indikasi pemain AFK</p>
+								<p><strong>Aturan Pause game :<br /></strong>1. Rentang waktu pause 1 menit&nbsp;<br />2. Maksimal 2 kali pause dalam satu game.</p>
+								<p>Demikian keputusan ini disampaikan, berlaku mulai jadwal pertandingan tanggal 18 Juli 2019 dan seterusnya sampai season berakhir</p>
 
-<p>Bandung, 17 Juli 2019<br />-panitia-</p>
+								<p>Bandung, 17 Juli 2019<br />-panitia-</p>
 							</div>
+					</div>
 				</div>
-			</div>
-			<div class="col-md-4 col-xs-6" style="padding:20px 20px 10px 10px;">
-							
-				<div class="panel panel-default">
+				<div class="col-md-4 col-xs-6" style="padding:20px 20px 10px 10px;">							
+					<div class="panel panel-default">
 						<div class="panel-heading">Standing Rule</div>
 							<div class="panel-body">
-							
+								<h5><strong>Mekanisme penentuan pemenang</strong></h5>
+								<p><span style="color: #e74c3c;"><strong>Klasemen Utama<br /></strong></span>
+								<strong>Parameter 1 :&nbsp; </strong>Total Score<strong><br />
+								Parameter 2 :&nbsp; </strong>Kill<strong><br />
+								Parameter 3 :&nbsp; </strong>Assist</p>
+								
+								<p><strong><span style="color: #e74c3c;">Reward</span><br />
+								1. Killing Machine<br /></strong>
+								<strong>Parameter 1 :&nbsp; </strong>Kill<strong><br />
+								Parameter 2 :&nbsp; </strong>Total Score<strong><br />
+								Parameter 3 :&nbsp; </strong>Win Rate<strong><br /></strong></p>
+								
+								<p><strong>2. Expert Wingman<br /></strong><strong>
+								Parameter 1 :&nbsp; </strong>Assist<strong><br />
+								Parameter 2 :&nbsp; </strong>Total Score<strong><br />
+								Parameter 3 :&nbsp; </strong>Win Rate</p>
+								<p>Bandung, 18 Juli 2019<br />-panitia-</p>
 							</div>
-				</div>
-				
-				</div>
-			</div>		
+					</div>
+				</div>	
+				<div class="col-md-4 col-xs-6" style="padding:20px 20px 10px 10px;">							
+					<div class="panel panel-success">
+						<div class="panel-heading">Prize</div>
+							<div class="panel-body">
+							<p><strong>Juara 1</strong> : Special skin<br />
+							<strong>Juara 2</strong> : Elite Skin<br />
+							<strong>Juara 3</strong> : Normal Skin<br />
+							<strong>Most Kill</strong> : Normal Skin<br />
+							<strong>Most Assist</strong> : Normal Skin</p>
+							
+							<p><strong>Juara 1 + Most Kill</strong> = Epic Skin</p>
+							<p>Bandung, 18 Juli 2019<br />-panitia-</p>
+							</div>
+					</div>
+				</div>	
+			</div>			
 		</div>
 	</div>
-
 </div>
 <?php 
 	//var_dump($model);
