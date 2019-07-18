@@ -174,7 +174,7 @@ $this->title = 'Len Legacy';
 			<div class="tab-pane fade" id="reward-5"  style="background-color:#F5F5F5;">
 				<div class="col-md-3 col-xs-6" style="padding:20px 20px 10px 10px;">
 					<div class="panel panel-primary">
-						<div class="panel-heading">Killing Machine Player</div>
+						<div class="panel-heading">Killing Machine</div>
 							<div class="panel-body">
 							<?php
 								foreach($mostkill as $mostkill){ 									
@@ -214,7 +214,7 @@ $this->title = 'Len Legacy';
 
 				<div class="col-md-3 col-xs-6" style="padding:20px 20px 10px 10px;">
 					<div class="panel panel-success">
-						<div class="panel-heading">Expert Wingman Player</div>
+						<div class="panel-heading">Expert Wingman</div>
 							<div class="panel-body">
 							<?php
 								foreach($mostassist as $mostassist){ ?>
@@ -250,7 +250,7 @@ $this->title = 'Len Legacy';
 
 				<div class="col-md-3 col-xs-6" style="padding:20px 20px 10px 10px;">
 					<div class="panel panel-danger">
-						<div class="panel-heading">Feeder Player</div>
+						<div class="panel-heading">Feeder</div>
 							<div class="panel-body">
 							<?php
 								foreach($mostdeath as $mostdeath){ ?>
@@ -278,7 +278,7 @@ $this->title = 'Len Legacy';
 
 				<div class="col-md-3 col-xs-6" style="padding:20px 20px 10px 10px;">
 					<div class="panel panel-warning">
-						<div class="panel-heading">Die Hard Player</div>
+						<div class="panel-heading">Die Hard</div>
 							<div class="panel-body">
 							<?php
 								foreach($survival as $survival){ ?>
