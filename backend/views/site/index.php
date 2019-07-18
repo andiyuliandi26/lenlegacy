@@ -188,7 +188,15 @@ $this->title = 'Len Legacy';
 										</tr>
 										<tr>
 											<th style="width:40%">Total Kill</th>
-											<td><?= $mostkill->kill ?></td>
+											<td class="text-success"><?= $mostkill->kill ?></td>
+										</tr>
+										<tr>
+											<th style="width:40%">Total Score</th>
+											<td class="text-warning"><?= $mostkill->totalrating ?></td>
+										</tr>
+										<tr>
+											<th style="width:40%">Win Rate</th>
+											<td class="text-danger"><?= $mostkill->winrate ?></td>
 										</tr>
 										<tr>
 											<th style="width:40%">Average</th>
@@ -218,7 +226,15 @@ $this->title = 'Len Legacy';
 										</tr>
 										<tr>
 											<th style="width:40%">Total Assist</th>
-											<td><?= $mostassist->assist ?></td>
+											<td class="text-success"><?= $mostassist->assist ?></td>
+										</tr>
+										<tr>
+											<th style="width:40%">Total Score</th>
+											<td class="text-warning"><?= $mostkill->totalrating ?></td>
+										</tr>
+										<tr>
+											<th style="width:40%">Win Rate</th>
+											<td class="text-danger"><?= $mostkill->winrate ?></td>
 										</tr>
 										<tr>
 											<th style="width:40%">Average</th>

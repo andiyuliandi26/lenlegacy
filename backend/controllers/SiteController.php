@@ -97,6 +97,7 @@ class SiteController extends Controller
         $standingList = array();
         $mostkillList = array();
         $mostassistList = array();
+
         foreach($statistic as $value){
              $standing = new Standing();
              $standing->player = $value->player;
@@ -130,16 +131,32 @@ class SiteController extends Controller
             $sort['assist'][$k] = $v->assist;
             $sort['winrate'][$k] = $v->winrate;
         }
+
+        $sort2 = array();
+        foreach($mostkillList as $k=>$v) {
+            $sort2['totalrating'][$k] = $v->totalrating;
+            $sort2['kill'][$k] = $v->kill;
+            $sort2['assist'][$k] = $v->assist;
+            $sort2['winrate'][$k] = $v->winrate;
+        }
+
+        $sort3 = array();
+        foreach($mostassistList as $k=>$v) {
+            $sort3['totalrating'][$k] = $v->totalrating;
+            $sort3['kill'][$k] = $v->kill;
+            $sort3['assist'][$k] = $v->assist;
+            $sort3['winrate'][$k] = $v->winrate;
+        }
         
         array_multisort( $sort['totalrating'],SORT_DESC, $sort['kill'],SORT_DESC, $sort['assist'],SORT_DESC, $standingList);
-        array_multisort( $sort['kill'],SORT_DESC, $sort['totalrating'],SORT_DESC, $sort['winrate'],SORT_DESC, $mostkillList);
-        array_multisort( $sort['assist'],SORT_DESC, $sort['totalrating'],SORT_DESC, $sort['winrate'],SORT_DESC, $mostassistList);
-        //print_r($mostassistList);
+        array_multisort( $sort2['kill'],SORT_DESC, $sort2['totalrating'],SORT_DESC, $sort2['winrate'],SORT_DESC, $mostkillList);
+        array_multisort( $sort3['assist'],SORT_DESC, $sort3['totalrating'],SORT_DESC, $sort3['winrate'],SORT_DESC, $mostassistList);
+        //print_r(json_encode($sort));
         for($i = 0; $i < 3; $i++){
             array_push($mostkill, $mostkillList[$i]);
         }
 
-        for($i = 0; $i < 40; $i++){
+        for($i = 0; $i < 3; $i++){
             array_push($mostassist, $mostassistList[$i]);
         }
 
