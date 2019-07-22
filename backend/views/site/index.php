@@ -230,11 +230,11 @@ $this->title = 'Len Legacy';
 										</tr>
 										<tr>
 											<th style="width:40%">Total Score</th>
-											<td class="text-warning"><?= $mostkill->totalrating ?></td>
+											<td class="text-warning"><?= $mostassist->totalrating ?></td>
 										</tr>
 										<tr>
 											<th style="width:40%">Win Rate</th>
-											<td class="text-danger"><?= $mostkill->winrate ?></td>
+											<td class="text-danger"><?= $mostassist->winrate ?></td>
 										</tr>
 										<tr>
 											<th style="width:40%">Average</th>

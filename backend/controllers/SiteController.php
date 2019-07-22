@@ -91,7 +91,7 @@ class SiteController extends Controller
         $mostassist = array();
         $mostdeath = Standing::getDataReward('death DESC', 'death');
         $survival = Standing::getDataReward('death ASC', 'death');
-        $statistic = Standing::getDataStatistic('rating DESC, kills DESC, assist DESC, name');
+        $statistic = Standing::getDataStatistic('name, rating DESC, kills DESC, assist DESC, name');
         
         //print_r(json_encode($statistic));
         $standingList = array();
