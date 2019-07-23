@@ -151,7 +151,7 @@ $this->title = 'Len Legacy';
 										<td><a href="'.Yii::$app->request->baseUrl.'/player/view?id='.$value->playerid.'">'.$value->player->name.' ('.$value->player->nickname.')</a></td>
 										<td style="text-align:center;">'.$value->ismvpwinning.'</td>
 										<td style="text-align:center;">'.$value->ismvplose.'</td>
-										<td class="success" style="text-align:center;font-weight:bold;">'.$value->kill.'</td>										
+										<td class="success" style="text-align:center;font-weight:bold;">'.$value->kills.'</td>										
 										<td style="text-align:center;">'.round($value->avgkill,1).'</td>
 										<td class="danger" style="text-align:center;font-weight:bold;">'.$value->death.'</td>
 										<td style="text-align:center;">'.round($value->avgdeath,1).'</td>
